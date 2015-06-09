@@ -1,0 +1,19 @@
+{
+  "name": "npm-toolkit",
+  "version": "0.0.0",
+  "description": "A toolkit of common npm tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://vot@github.com/vot/npm-toolkit.git"
+  },
+  "author": "Vot Z <http://vot-z.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vot/npm-toolkit/issues"
+  },
+  "homepage": "https://github.com/vot/npm-toolkit"
+}
