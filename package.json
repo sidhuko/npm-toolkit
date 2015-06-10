@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/vot/npm-toolkit/issues"
   },
-  "homepage": "https://github.com/vot/npm-toolkit"
+  "homepage": "https://github.com/vot/npm-toolkit",
+  "dependencies": {
+    "lodash": "^3.9.3"
+  }
 }
