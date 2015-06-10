@@ -7,13 +7,14 @@ var NpmToolkit = {
   answers: [],
   queue: [],
   script: function (answers) {
+    // a poor default handler
+    console.log(' -- default script --');
     console.log(JSON.stringify(answers, null, "  "));
   },
   ask: function (questions) {
     var self = this;
     if (!questions) {
-      questions = _.cloneDeep(self.questions.main);
-      questions.push(self.questions._restart);
+      questions = self.questions.main;
     }
     inquirer.prompt(questions, self.script);
   }

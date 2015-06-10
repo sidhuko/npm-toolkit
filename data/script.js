@@ -3,18 +3,21 @@ var NpmToolkitFactory = require('../index');
 var NpmToolkit = NpmToolkitFactory();
 
 var MyScript = function (answers) {
+  console.log(' -- loaded custom script: MyScript --');
   var queue = NpmToolkit.queue;
-  var questions = NpmToolkit.questions;
+  //var questions = NpmToolkit.questions;
 
-  console.log(' // Answers: ' + JSON.stringify(answers));
+
   //prepare answers.main + answer.opts
-  //queue.push(answers);
+  _.forEach(answers, function (answer) {
+      queue.push(answer);
+  });
+
 
 
   if (!!answers.restart) {
-    var myQueue = _.cloneDeep(questions.main);
-    myQueue.push(questions._restart);
-    return NpmToolkit.ask(myQueue);
+    console.log('restarting');
+    return NpmToolkit.ask();
   }
 
   //if (answers) {
@@ -23,7 +26,14 @@ var MyScript = function (answers) {
     //return NpmToolkit.ask(questions.main);
   //}
 
+
+if (!answers.restart) {
+  console.log('\n\nnot restarting - final output');
   //console.log("Chosen tasks: ", queue.join(", "));
+  console.log(' // Answers: ' + JSON.stringify(answers));
+  console.log(' // Queued:  ' + JSON.stringify(queue));
+}
+
 
 };
 

@@ -1,8 +1,18 @@
 var inquirer = require('inquirer');
 var questions = {};
 
+/**
+ */
+questions._restart = {
+  type: "confirm",
+  name: "restart",
+  message: "Restart this prompt? (yes)",
+  default: true
+};
 
-questions.main = [{
+/**
+ */
+questions._main = {
   type: "list",
   name: "main",
   message: "What do you want to do?",
@@ -23,8 +33,10 @@ questions.main = [{
     "X2 System status",
     ""
   ]
-}];
+};
 
+/**
+ */
 questions.size = [{
   type: "list",
   name: "size",
@@ -33,11 +45,8 @@ questions.size = [{
   filter: function (val) { return val.toLowerCase(); }
 }];
 
-questions._restart = {
-  type: "confirm",
-  name: "restart",
-  message: "Restart this prompt? (yes)",
-  default: true
-};
+/**
+ */
+questions.main = [questions._main, questions._restart];
 
 module.exports = questions;
