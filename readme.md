@@ -11,5 +11,7 @@ tasks, i.e.
 - set env variables
 
 ```
+npm install . -g
+
 npm install github:vot/npm-toolkit -g
 ```
