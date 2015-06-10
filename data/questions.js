@@ -17,21 +17,23 @@ questions._main = {
   name: "main",
   message: "What do you want to do?",
   choices: [
-    "1 Start app",
-    "2 Start watchers",
-    "3 Watch logs",
-    "4 Start Node Inspector",
-    "",
-    "5 Run linter",
-    "6 Run unit tests",
-    "",
-    "7 SVN status",
-    "8 SVN commit",
-    "9 Publish modules",
+    //new inquirer.Separator(),
+    "Start app",
+    "Start watchers",
+    "Watch logs",
+    "Start Node Inspector",
+    new inquirer.Separator(),
+    "Run linter",
+    "Run unit tests",
+    new inquirer.Separator(),
+    "SVN status",
+    "SVN commit",
+    "Publish modules",
     new inquirer.Separator(),
     "X1 Application setup",
     "X2 System status",
-    ""
+    new inquirer.Separator(),
+    "Exit"
   ]
 };
 
