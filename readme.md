@@ -9,3 +9,7 @@ tasks, i.e.
 - run migrations
 - check config value
 - set env variables
+
+```
+npm install github:vot/npm-toolkit -g
+```
