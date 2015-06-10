@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/vot/npm-toolkit",
   "dependencies": {
+    "inquirer": "^0.8.5",
     "lodash": "^3.9.3"
   }
 }
