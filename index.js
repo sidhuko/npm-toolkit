@@ -1,9 +1,16 @@
 #!/usr/bin/env node
 
+var ROOT_DIR = process.cwd(),
+    SETTINGS_DIR_NAME = 'npm-toolkit-rc',
+    SETTINGS_DIR = [ROOT_DIR, SETTINGS_DIR_NAME].join('/');
+
 var parser = require('nomnom')();
 var chalk = require('chalk');
+var fs = require('fs');
+var _ = require('lodash');
 
-var ROOT_DIR = process.cwd();
+
+
 
 console.log(chalk.bold('\n\n----------- npm-toolkit -----------'));
 
@@ -13,18 +20,26 @@ var Commands = {
     console.log('Lorem ipsum dolor sit ...');
 
     var InquirerFactory = require('./lib/inquirer');
-    var questions = require(ROOT_DIR + '/data/questions');
-    var script = require(ROOT_DIR + '/data/script');
-
-    var Inquirer = InquirerFactory(questions, script);
+    var Inquirer = InquirerFactory(require(SETTINGS_DIR + '/inq-questions'), require(SETTINGS_DIR + '/inq-script'));
     Inquirer.ask();
-
   },
   do: function (opts) {
-    var commands = opts._;
-    commands.shift();
-    console.log(chalk.bold('Executing a task: ') + commands.join(' '));
-    console.log('Lorem ipsum dolor sit ...');
+    var availableCommands = Helpers.scanCommands();
+    var inputCommands = opts._;
+    inputCommands.shift();
+    var immediateCommand = inputCommands[0];
+    var commandExists = _.has(availableCommands, immediateCommand);
+
+    if (commandExists) {
+      console.log(chalk.bold('Executing a task: ') + inputCommands.join(' '));
+      var fn = _.get(availableCommands, immediateCommand);
+      fn(opts);
+    } else {
+      console.log(chalk.bold('Task "' + immediateCommand + '" not found.'));
+      console.log('Lorem ipsum dolor sit ...');
+    }
+
+
   },
   web: function (opts) {
     var port = (opts.port || 9000);
@@ -35,6 +50,16 @@ var Commands = {
 };
 
 var Helpers = {
+  scanCommands: function () {
+    var commands = {};
+    _.forEach(fs.readdirSync(SETTINGS_DIR + '/commands'), function (el) {
+      var item = _.trimRight(el, '.js');
+      commands[item] = require(SETTINGS_DIR + '/commands/' + item);
+    });
+
+    return commands;
+    //require(SETTINGS_DIR + '/commands/log')();
+  },
   parseOptions: function () {
     parser.option('debug', {
         abbr: 'd',
