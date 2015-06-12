@@ -61,8 +61,12 @@ var Commands = {
       console.log();
 
       _.forEach(availableCommands, function (command) {
-        console.log(' * do ' + command.toString());
+        console.log(' * ' + command.toString());
       });
+
+      console.log();
+      console.log('You can run them by typing npm-toolkit do [command]');
+
     } else {
       console.log(chalk.bold('Available commands:  ') + availableCommands.join('  '));
     }
