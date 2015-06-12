@@ -1,16 +1,24 @@
 var questions = {
   restart: {
-    type: "confirm",
     name: "restart",
-    message: "Restart this prompt? (yes)",
+    type: "confirm",
+    message: "Restart this prompt? (no)",
     default: false
   },
+  quit: {
+    name: "quit",
+    type: "confirm",
+    message: "Do you want to quit? (yes)",
+    default: true
+  },
   size: {
-    type: "list",
     name: "size",
+    type: "list",
     message: "What size do you need",
     choices: ["Large", "Standard", "Medium", "Small"],
-    filter: function (val) { return val.toLowerCase(); }
+    filter: function (val) {
+      return val.toLowerCase();
+    }
   }
 };
 
