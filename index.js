@@ -101,9 +101,9 @@ var Commands = {
 
   // Start the Command Line Interface
   cli: function (opts) {
-    var InquirerFactory = require('./lib/inquirer');
-    var Inquirer = InquirerFactory(require(SETTINGS_DIR + '/inq-questions'), require(SETTINGS_DIR + '/inq-script'));
-    Inquirer.ask();
+    var NTInterfaceCLIFactory = require('./lib/NTInterfaceCLI');
+    var NTInterfaceCLI = NTInterfaceCLIFactory(require(SETTINGS_DIR + '/inq-questions'), require(SETTINGS_DIR + '/inq-script'));
+    NTInterfaceCLI.ask();
     // TODO: replace inq-questions: parse commands.json and output it
     // TODO: replace inq-script: write a generic exit script / command launcher
   },
