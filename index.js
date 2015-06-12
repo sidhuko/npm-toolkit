@@ -39,6 +39,9 @@ var Application = function () {
   parser.command('do')
     .callback(Commands.do);
 
+  parser.command('create')
+    .callback(Commands.create);
+
   parser.command('info')
     .callback(Commands.info);
 
