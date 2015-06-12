@@ -8,7 +8,8 @@ var os = require('os');
 var _ = require('lodash');
 
 // Define constants
-var ROOT_DIR = process.cwd(),
+var NPM_TOOLKIT_VERSION = '0.0.1',
+    ROOT_DIR = process.cwd(),
     SETTINGS_DIR_NAME = 'npm-toolkit-rc',
     SETTINGS_DIR = [ROOT_DIR, SETTINGS_DIR_NAME].join('/');
 
@@ -41,9 +42,8 @@ var Commands = {
     print('Hostname', os.hostname(), displayStyle);
     var osString = [os.type(), os.release(), os.arch()].join(' ');
     print('Operating system', osString, displayStyle);
-    // node version
-    // npm version
-    // npm-toolkit version
+    print('Node version', process.version, displayStyle);
+    print('npm-toolkit version', NPM_TOOLKIT_VERSION, displayStyle);
 
     if (displayInfo) Helpers.printSummary();
   },
@@ -203,7 +203,7 @@ var Application = function () {
       abbr: 'v',
       help: 'Prints version',
       callback: function() {
-        return 'npm-toolkit 0.0.1';
+        return 'npm-toolkit ' + NPM_TOOLKIT_VERSION;
       }
     });
 
