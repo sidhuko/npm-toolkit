@@ -48,6 +48,14 @@ var Application = function () {
   parser.command('list')
     .callback(Commands.list);
 
+  parser.command('init')
+    .callback(Commands.list)
+    .option('example', {
+      abbr: 'e',
+      flag: false,
+      help: 'Use example data'
+    });
+
   parser.command('help')
     .callback(Commands.help);
 

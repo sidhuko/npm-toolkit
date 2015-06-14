@@ -1,4 +1,4 @@
-## npm-toolkit
+## npm-toolkit [ntk]
 
 A small command line utility to provide you a prompt-based menu with predefined
 tasks.
@@ -15,28 +15,49 @@ At the moment there aren't many features but the example tasks can include thing
 - ssh into the deployed boxes and predefine the common tasks
   to be ran without having to log in (such as restarting a remote service)
 
+### Installing
+
+First install npm-toolkit globally and register task alias.
+
 ```
 npm install . -g
 ```
-or
+
+In case you want to use development version and contribute node-toolkit
+checkout the project from GitHub and create links manually:
 ```
-npm install github:vot/npm-toolkit -g
+  git clone https://github.com/git/npm-toolkit.git
+
+  ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
+
+  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/npm-toolkit
 ```
 
 ### How to use
 
-First install npm-toolkit globally and register task alias.
-In most cases you can use "npm install npm-toolkit -g" for that.
+Note: If you chose to check out from GitHub you should do the following
+in a different directory than the one with your npm-toolkit copy.
 
-For local development create links manually:
+At the top-level of your own app create a folder named npm-toolkit-rc.
+You can do this using the command line as well.
+
 ```
-  ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
-  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/npm-toolkit
+  Initialise an empty settings folder:
+
+  npm-toolkit init
+
+
+  Initialise the settings folder with example files:
+
+  npm-toolkit init --e=true
 ```
 
-Then create a folder named npm-toolkit-rc in your project directory.
-Check out the example at https://github.com/vot/npm-toolkit-example 
+You can also check out the example code directly from GitHub:
+```
+  git clone https://github.com/vot/npm-toolkit-example.git
+```
 
+The example code can be seen here: (https://github.com/vot/npm-toolkit-example)[https://github.com/vot/npm-toolkit-example]
 
 ### To do
 
