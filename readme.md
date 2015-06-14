@@ -39,17 +39,10 @@ Note: If you chose to check out from GitHub you should do the following
 in a different directory than the one with your npm-toolkit copy.
 
 At the top-level of your own app create a folder named npm-toolkit-rc.
-You can do this using the command line as well.
+You can do this using the following command.
 
 ```
-  Initialise an empty settings folder:
-
-  npm-toolkit init
-
-
-  Initialise the settings folder with example files:
-
-  npm-toolkit init --e=true
+  mkdir npm-toolkit-rc
 ```
 
 You can also check out the example code directly from GitHub:
