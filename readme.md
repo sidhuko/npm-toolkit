@@ -17,7 +17,9 @@ At the moment there aren't many features but the example tasks can include thing
 
 ```
 npm install . -g
-
+```
+or
+```
 npm install github:vot/npm-toolkit -g
 ```
 
@@ -27,8 +29,10 @@ First install npm-toolkit globally and register task alias.
 In most cases you can use "npm install npm-toolkit -g" for that.
 
 For local development create links manually:
+```
   ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
   ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/npm-toolkit
+```
 
 Then create a folder named npm-toolkit-rc in your project directory.
 Check out the example at https://github.com/vot/npm-toolkit-example 
