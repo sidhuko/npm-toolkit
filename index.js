@@ -49,7 +49,7 @@ var Application = function () {
     .callback(Commands.list);
 
   parser.command('init')
-    .callback(Commands.list)
+    .callback(Commands.init)
     .option('example', {
       abbr: 'e',
       flag: false,
