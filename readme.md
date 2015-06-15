@@ -1,7 +1,16 @@
-## npm-toolkit [ntk]
+## npm-toolkit
 
-A small command line utility to provide you a prompt-based menu with predefined
-tasks.
+TL;DR: essentially a fancy "npm run".
+
+A small command line utility to provide you a prompt-based menu with predefined tasks.
+It is written in a simple way to give you the flexibility to create custom workflows available under multiple interfaces.
+
+
+It should be possible to run as:
+
+* npm-toolkit: interactive prompt
+* npm-toolkit do [task]: run a task directly
+* npm-toolkit web: starts web interface (not yet implemented)
 
 
 At the moment there aren't many features but the example tasks can include things like:
@@ -14,6 +23,7 @@ At the moment there aren't many features but the example tasks can include thing
 - setting an application up for predefined deployments (creating symlinks for developers, setting env variables)
 - ssh into the deployed boxes and predefine the common tasks
   to be ran without having to log in (such as restarting a remote service)
+
 
 ### Installing
 
@@ -50,7 +60,7 @@ You can also check out the example code directly from GitHub:
   git clone https://github.com/vot/npm-toolkit-example.git
 ```
 
-The example code can be seen here: (https://github.com/vot/npm-toolkit-example)[https://github.com/vot/npm-toolkit-example]
+The example code can be seen here: https://github.com/vot/npm-toolkit-example
 
 ### To do
 
