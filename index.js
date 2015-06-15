@@ -65,3 +65,9 @@ var Application = function () {
 
 // Execute the application
 var ApplicationArguments = Application();
+
+module.exports = {
+  constants: Constants,
+  commands: Commands,
+  helpers: Helpers
+};
