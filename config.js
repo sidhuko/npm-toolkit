@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
-var debug = true;
+var debug = false;
+// TODO: Make debug sensitive to --debug flag
 
 var _cfg = {
   constants: {

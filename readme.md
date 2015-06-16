@@ -1,10 +1,43 @@
 ## npm-toolkit
 
-TL;DR: essentially a fancy "npm run".
+TL;DR: essentially a fancy "npm run" wrapper / launcher.
+
+NOTE: THIS MODULE IS STILL IN EXPERIMENTAL STAGE. DO NOT USE IN PRODUCTION.
 
 A small command line utility to provide you a prompt-based menu with predefined tasks.
 It is written in a simple way to give you the flexibility to create custom workflows available under multiple interfaces.
 
+At the moment it is advised for the tasks should be self-contained and have as little dependencies as possible.
+This is in order to ensure integrity of your toolkit and its results regardless of environment or module versions.
+
+
+### Quick start
+1) Install npm-toolkit globally.
+2) Set it up in your application.
+  * First of all create npm-toolkit-rc in the root of your project.
+  * You add the tasks by creating a Node.js script in npm-toolkit-rc/tasks.
+
+You can run created tasks by typing "npm-toolkit do [task-name]" from anywhere in your project
+
+Check out an example here: https://github.com/vot/npm-toolkit-example
+
+
+### Displaying tasks in the interactive menu
+Assuming you defined your task as "app.js", here is the sample entry you add to tasks.main.json:
+
+```
+{
+  "name": "Launch app",
+  "type": "launch",
+  "opts": "app",
+  "interfaces": ["cli", "web"]
+}
+```
+
+Note: opts has to contain the name of your task (same as your filename without the extension).
+More docs coming. In the meantime - check in code ;)
+
+### TODO / Feature list
 
 It should be possible to run as:
 
@@ -60,8 +93,6 @@ You can also check out the example code directly from GitHub:
   git clone https://github.com/vot/npm-toolkit-example.git
 ```
 
-The example code can be seen here: https://github.com/vot/npm-toolkit-example
-
 ### To do
 
 This will have to be a long list of features since there is a lot of stuff to write ;)
@@ -73,5 +104,5 @@ This will have to be a long list of features since there is a lot of stuff to wr
 * Create a REST API to communicate between instances of npm-toolkit (with permissions system)
 * Unify the internal API
 * Write a parser for userdata.ntkrc
-* Add an optional "ntk" alias
+* Investigate usage of 'ntk' command and add as an optional alias
 * Write a parser for commands.json to generate interactive menu & Web interface
