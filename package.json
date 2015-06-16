@@ -1,6 +1,6 @@
 {
   "name": "npm-toolkit",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "TL;DR: essentially a fancy 'npm run'. A small command line utility to provide you a launcher for predefined tasks.",
   "main": "index.js",
   "bin": {
