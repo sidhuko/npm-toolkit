@@ -36,7 +36,7 @@ var produceConfig = function (checkDir) {
       return process.exit(1);
     }
     var newDir = path.join(checkDir + '/..');
-    resolvepaths.root(newDir);
+    produceConfig(newDir);
   }
 };
 
