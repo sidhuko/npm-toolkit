@@ -14,12 +14,12 @@ var Application = function () {
   parser.option('quiet', {
       abbr: 'q',
       flag: false,
-      default: !!config.userdata.launcher.quietByDefault,
+      default: _.get(config, 'userdata.launcher.quietByDefault', false),
       help: 'Quiet mode'
     })
     .option('settings', {
       abbr: 's',
-      default: config.constants.settingsDir,
+      default: _.get(config, 'constants.settingsDir', 'npm-toolkit-rc'),
       help: 'Name of the settings directory'
     })
     .option('version', {
@@ -27,7 +27,7 @@ var Application = function () {
       abbr: 'v',
       help: 'Prints version',
       callback: function() {
-        return 'npm-toolkit ' + config.constants.version;
+        return 'npm-toolkit ' + _.get(config, 'constants.version', '')
       }
     });
 
