@@ -5,7 +5,7 @@ var debug = false;
 
 var _cfg = {
   constants: {
-    version: '0.0.1',
+    version: '0.1.3',
     settingsDir: 'npm-toolkit-rc',
     userdataFilename: 'userdata.ntkrc'
   },

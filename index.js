@@ -66,10 +66,8 @@ var Application = function () {
 };
 
 // Execute the application
-var ApplicationArguments = Application();
+module.exports = Application();
 
-module.exports = {
-  config: config,
-  commands: Commands,
-  helpers: Helpers
-};
+// module.exports.config = config;
+// module.exports.commands = Commands;
+// module.exports.helpers = Helpers;
