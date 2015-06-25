@@ -12,8 +12,6 @@ var _cfg = {
   paths: {}
 };
 
-var rtn = _cfg;
-
 var parseUserdata = function (path) {
   var userdata = fs.readFileSync(path + '/' + _cfg.constants.userdataFilename);
   return JSON.parse(userdata);
@@ -42,5 +40,6 @@ var produceConfig = function (checkDir) {
   }
 };
 
-rtn = produceConfig(process.cwd().toString());
-module.exports = rtn;
+produceConfig(process.cwd().toString());
+
+module.exports = _cfg;
