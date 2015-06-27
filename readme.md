@@ -10,7 +10,6 @@ It is written in a simple way to give you the flexibility to create custom workf
 At the moment it is advised for the tasks should be self-contained and have as little dependencies as possible.
 This is in order to ensure integrity of your toolkit and its results regardless of environment or module versions.
 
-
 ### Quick start
 1) Install npm-toolkit globally.
 2) Set it up in your application.
@@ -37,7 +36,7 @@ Assuming you defined your task as "app.js", here is the sample entry you add to 
 Note: opts has to contain the name of your task (same as your filename without the extension).
 More docs coming. In the meantime - check in code ;)
 
-### TODO / Feature list
+### Feature list (draft)
 
 It should be possible to run as:
 
@@ -56,6 +55,13 @@ At the moment there aren't many features but the example tasks can include thing
 - setting an application up for predefined deployments (creating symlinks for developers, setting env variables)
 - ssh into the deployed boxes and predefine the common tasks
   to be ran without having to log in (such as restarting a remote service)
+
+
+### Logging issues and feature requests
+
+Please log issues on https://github.com/vot/npm-toolkit/issues
+
+You can also just check out code and create a pull request, contributors welcome :)
 
 
 ### Installing
