@@ -5,7 +5,7 @@ var debug = false;
 
 var _cfg = {
   constants: {
-    version: '0.1.3',
+    version: require('./package.json').version,
     settingsDir: 'npm-toolkit-rc',
     userdataFilename: 'userdata.ntkrc'
   },
