@@ -4,7 +4,8 @@
   "description": "TL;DR: essentially a fancy 'npm run'. A small command line utility to provide you a launcher for predefined tasks.",
   "main": ".",
   "bin": {
-    "npm-toolkit": "index.js"
+    "npm-toolkit": "index.js",
+    "nt": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

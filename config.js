@@ -17,7 +17,7 @@ var parseUserdata = function (path) {
   return JSON.parse(userdata);
 };
 
-var produceConfig = function (checkDir) {
+var findConfig = function (checkDir) {
   if (fs.existsSync(checkDir + '/' + _cfg.constants.settingsDir)) {
     if (debug) console.log(_cfg.constants.settingsDir + ' found in ' + checkDir);
     _cfg.paths.root = checkDir;
@@ -36,10 +36,10 @@ var produceConfig = function (checkDir) {
       return process.exit(1);
     }
     var newDir = path.join(checkDir + '/..');
-    produceConfig(newDir);
+    findConfig(newDir);
   }
 };
 
-produceConfig(process.cwd().toString());
+findConfig(process.cwd().toString());
 
 module.exports = _cfg;
