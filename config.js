@@ -23,10 +23,9 @@ var findConfig = function (checkDir) {
     if (debug) console.log(_cfg.constants.settingsDir + ' found in ' + checkDir + '\n');
     _cfg.paths.root = checkDir;
     _cfg.paths.settings = [checkDir, _cfg.constants.settingsDir].join('/');
-
     if (debug) console.log('Parsing userdata');
     _cfg.userdata = parseUserdata(_cfg.paths.settings);
-    _cfg.paths.launcher = _cfg.userdata.launcher.dir;
+    _cfg.paths.app = checkDir + '/' + _cfg.userdata.launcher.dir;
     if (debug) console.log(_cfg);
     if (debug) console.log('---------------------------------------\n');
     return true;
