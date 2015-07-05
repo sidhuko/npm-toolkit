@@ -49,8 +49,7 @@ var Application = function () {
   parser.command('init')
     .callback(Commands.init)
     .option('example', {
-      abbr: 'e',
-      flag: false,
+      position: 0,
       help: 'Use example data'
     });
 
@@ -68,7 +67,3 @@ var Application = function () {
 
 // Execute the application
 module.exports = Application();
-
-// module.exports.config = config;
-// module.exports.commands = Commands;
-// module.exports.helpers = Helpers;
