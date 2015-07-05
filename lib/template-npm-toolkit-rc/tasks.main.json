@@ -1,53 +1,8 @@
 [
   {
-    "name": "Launch app",
+    "name": "Default",
     "type": "launch",
-    "opts": "app",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "Launch app (debug mode)",
-    "type": "launch",
-    "opts": "app debug",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "Watch logs",
-    "type": "launch",
-    "opts": "log --lines=20",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "Launch inspector",
-    "type": "launch",
-    "opts": "inspector",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "type": "separator",
-    "disabled": true,
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "Test",
-    "type": "launch",
-    "opts": "test",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "type": "separator",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "App health",
-    "type": "launch",
-    "opts": "apphealth",
-    "interfaces": ["cli", "web"]
-  },
-  {
-    "name": "Sys info",
-    "type": "command",
-    "opts": "info",
+    "opts": "default",
     "interfaces": ["cli", "web"]
   },
   {
