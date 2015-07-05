@@ -9,9 +9,12 @@ var Commands = require('./lib/commands');
 var Helpers = require('./lib/helpers');
 var config = require('./config');
 
+Helpers.ulimit.set(2048);
+
 // Define the Application function
 var Application = function () {
-  parser.option('quiet', {
+  parser
+    .option('quiet', {
       abbr: 'q',
       flag: false,
       default: _.get(config, 'userdata.launcher.quietByDefault', false),
@@ -31,24 +34,17 @@ var Application = function () {
       }
     });
 
-  //TODO: add ulimit -n 2048 for 'cli' and 'do' commands
-  parser.command('')
-    .callback(Commands.cli);
+  parser.command('web').callback(Commands.web);
 
-  parser.command('web')
-    .callback(Commands.web);
+  parser.command('do').callback(Commands.do);
 
-  parser.command('do')
-    .callback(Commands.do);
+  parser.command('make').callback(Commands.make);
 
-  parser.command('make')
-    .callback(Commands.make);
+  parser.command('status').callback(Commands.status);
 
-  parser.command('info')
-    .callback(Commands.info);
+  parser.command('info').callback(Commands.status);
 
-  parser.command('list')
-    .callback(Commands.list);
+  parser.command('list').callback(Commands.list);
 
   parser.command('init')
     .callback(Commands.init)
@@ -60,6 +56,11 @@ var Application = function () {
 
   parser.command('help')
     .callback(Commands.help);
+
+  parser.nocommand()
+    .callback(function (options) {
+      Commands.cli();
+    })
 
   // Run parser and return user input
   return parser.parse();

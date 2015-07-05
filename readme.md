@@ -16,7 +16,9 @@ This is in order to ensure integrity of your toolkit and its results regardless 
   * First of all create npm-toolkit-rc in the root of your project.
   * You add the tasks by creating a Node.js script in npm-toolkit-rc/tasks.
 
-You can run created tasks by typing "npm-toolkit do [task-name]" from anywhere in your project
+"npm-toolkit" and "nt" aliases will be added globally and can be used interchangeably.
+
+You can run created tasks by typing "nt do [task-name]" from anywhere in your project
 
 Check out an example here: https://github.com/vot/npm-toolkit-example
 
@@ -40,12 +42,17 @@ More docs coming. In the meantime - check in code ;)
 
 It should be possible to run as:
 
-* npm-toolkit: interactive prompt
-* npm-toolkit do [task]: run a task directly
-* npm-toolkit web: starts web interface (not yet implemented)
+* nt: interactive prompt
+* nt do [task]: run a task directly
+* nt list: lists tasks
+* nt status: shows the status information
+* nt web: starts web interface (not yet implemented)
 
 
-At the moment there aren't many features but the example tasks can include things like:
+
+### Example tasks
+
+At the moment there aren't many predefined tasks but they could include things like:
 - starting app
 - reading logs
 - running unit tests and linters
@@ -79,7 +86,7 @@ checkout the project from GitHub and create links manually:
 
   ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
 
-  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/npm-toolkit
+  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
 ```
 
 ### How to use
@@ -110,5 +117,4 @@ This will have to be a long list of features since there is a lot of stuff to wr
 * Create a REST API to communicate between instances of npm-toolkit (with permissions system)
 * Unify the internal API
 * Write a parser for userdata.ntkrc
-* Investigate usage of 'ntk' command and add as an optional alias
 * Write a parser for commands.json to generate interactive menu & Web interface
