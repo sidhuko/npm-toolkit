@@ -38,13 +38,12 @@ Assuming you defined your task as "app.js", here is the sample entry you add to 
 Note: opts has to contain the name of your task (same as your filename without the extension).
 More docs coming. In the meantime - check in code ;)
 
-### Feature list (draft)
-
-It should be possible to run as:
+### Commands
 
 * nt: interactive prompt
+* nt list: lists tasks and file templates
 * nt do [task]: run a task directly
-* nt list: lists tasks
+* nt make [file]: create a file from a template in a current directory
 * nt status: shows the status information
 * nt web: starts web interface (not yet implemented)
 
@@ -73,20 +72,8 @@ You can also just check out code and create a pull request, contributors welcome
 
 ### Installing
 
-First install npm-toolkit globally and register task alias.
-
 ```
-npm install . -g
-```
-
-In case you want to use development version and contribute node-toolkit
-checkout the project from GitHub and create links manually:
-```
-  git clone https://github.com/git/npm-toolkit.git
-
-  ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
-
-  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
+npm install npm-toolkit -g
 ```
 
 ### How to use
@@ -105,6 +92,27 @@ You can also check out the example code directly from GitHub:
 ```
   git clone https://github.com/vot/npm-toolkit-example.git
 ```
+
+### Manual installation (development version)
+
+In case you want to use development version and contribute node-toolkit
+checkout the project from GitHub and create links manually:
+```
+  git clone https://github.com/git/npm-toolkit.git
+
+  ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
+
+  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
+```
+
+Then in your app folder:
+
+```
+ln -s /usr/local/lib/node_modules/npm-toolkit ./npm-toolkit-rc/node_modules/npm-toolkit
+```
+
+And you're good to go. You can make changes to the code and contribute :)
+
 
 ### To do
 
