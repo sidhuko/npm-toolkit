@@ -90,7 +90,7 @@ checkout the project from GitHub and create links manually:
 ```
   git clone https://github.com/git/npm-toolkit.git
 
-  ln -s ' + TOOLKIT_DIR + ' /usr/local/lib/node_modules/npm-toolkit
+  ln -s $(pwd) /usr/local/lib/node_modules/npm-toolkit
 
   ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
 ```
