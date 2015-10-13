@@ -9,7 +9,7 @@ var Commands = require('./lib/commands');
 var Helpers = require('./lib/helpers');
 var config = require('./config');
 
-Helpers.ulimit.set(2048);
+// Helpers.ulimit.set(2048);
 
 // Define the Application function
 var Application = function () {
