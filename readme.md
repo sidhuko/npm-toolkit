@@ -11,6 +11,13 @@ At the moment it is advised for the tasks should be self-contained and have as l
 This is in order to ensure integrity of your toolkit and its results regardless of environment or module versions.
 
 
+## Change log
+
+v0.1.9
+
+Added env.json parser to set environmental variables for your apps through a dedicated JSON file. Supports multiple configs with --config switch.
+By default it looks for env.json, if config switch is set to "yourconfig" then env.yourconfig.json is loaded instead.
+
 ### Installing
 
 ```

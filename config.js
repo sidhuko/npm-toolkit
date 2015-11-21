@@ -1,7 +1,8 @@
+var args = require('nomnom')().parse();
+
 var fs = require('fs');
 var path = require('path');
-var debug = false;
-// TODO: Make debug sensitive to --debug flag
+var debug = args.debug || args.d || false;
 
 var _cfg = {
   constants: {
@@ -13,9 +14,21 @@ var _cfg = {
 };
 
 var parseUserdata = function (path) {
+  setEnvVars(path);
   var userdata = JSON.parse(fs.readFileSync(path + '/' + _cfg.constants.userdataFilename));
   delete userdata._meta;
   return userdata;
+};
+
+var setEnvVars = function (path) {
+  var env = args.config + '.';
+
+  var json = JSON.parse(fs.readFileSync(path + '/' + 'env.' + (args.config ? args.config + '.' : '') + 'json'));
+  if (debug) console.log('\n', 'Setting up following environmental vars', json);
+  Object.keys(json).forEach(function (key) {
+    if (process.env[key]) console.log('Overwriting variable', key, '(', process.env[key], '->', json[key], ')');
+    process.env[key] = json[key];
+  });
 };
 
 var findConfig = function (checkDir) {
@@ -23,10 +36,10 @@ var findConfig = function (checkDir) {
     if (debug) console.log(_cfg.constants.settingsDir + ' found in ' + checkDir + '\n');
     _cfg.paths.root = checkDir;
     _cfg.paths.settings = [checkDir, _cfg.constants.settingsDir].join('/');
-    if (debug) console.log('Parsing userdata');
+    if (debug) console.log('\n', 'Parsing userdata');
     _cfg.userdata = parseUserdata(_cfg.paths.settings);
     _cfg.paths.app = checkDir + '/' + _cfg.userdata.launcher.dir;
-    if (debug) console.log(_cfg);
+    if (debug) console.log('\n', 'Config', _cfg);
     if (debug) console.log('---------------------------------------\n');
     return true;
   } else {
