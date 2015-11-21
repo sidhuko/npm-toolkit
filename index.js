@@ -20,8 +20,10 @@ var Application = function () {
       default: _.get(config, 'userdata.launcher.quietByDefault', false),
       help: 'Quiet mode'
     })
+    .option('env', {
+      help: 'Variant of the env vars file to load'
+    })
     .option('settings', {
-      abbr: 's',
       default: _.get(config, 'constants.settingsDir', 'npm-toolkit-rc'),
       help: 'Name of the settings directory'
     })

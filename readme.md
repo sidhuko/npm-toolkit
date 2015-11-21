@@ -13,10 +13,17 @@ This is in order to ensure integrity of your toolkit and its results regardless 
 
 ## Change log
 
+v0.1.10
+
+Updated env switch name (used to be config). Updated docs and parser inputs for help screen.
+
+Fixed settings switch.
+
+
 v0.1.9
 
-Added env.json parser to set environmental variables for your apps through a dedicated JSON file. Supports multiple configs with --config switch.
-By default it looks for env.json, if config switch is set to "yourconfig" then env.yourconfig.json is loaded instead.
+Added env.json parser to set environment variables for your apps through a dedicated JSON file. Supports switching to custom files with --env switch.
+By default it looks for env.json, if env switch is set to "yourconfig" then env.yourconfig.json is loaded instead.
 
 ### Installing
 
@@ -26,7 +33,7 @@ npm install npm-toolkit -g
 
 You can also check out development version directly from GitHub, instructions near the end.
 
-"npm-toolkit" and "nt" aliases will be added globally and can be used interchangeably.
+"nt" alias will be added globally.
 
 
 ### Quick start
@@ -41,7 +48,7 @@ You add the tasks by creating a Node.js script in npm-toolkit-rc/tasks.
 These tasks will be picked up automatically and available instantly.
 You can run them by typing "nt do [task-name]" from anywhere within your project
 
-See example npm-toolkit-rc on GitHub: https://github.com/vot/npm-toolkit-example
+You can use a different settings directory name with --settings=yourdir switch.
 
 ### Commands
 
@@ -50,22 +57,25 @@ See example npm-toolkit-rc on GitHub: https://github.com/vot/npm-toolkit-example
 * nt do [task]: run a task directly
 * nt make [file]: create a file from a template in a current directory
 * nt status: shows the status information
-* nt web: starts web interface (not yet implemented)
 
 
 ### Example tasks
 
-At the moment there aren't many predefined tasks but they could include things like:
+See example npm-toolkit-rc on GitHub: https://github.com/vot/npm-toolkit-example
+
+The examples include:
 - starting app
 - reading logs
 - running unit tests and linters
-- running migrations for your app
-- checking dependencies & integration: MongoDB, Redis, VPN, external services, their pings
-- checking config values of your app and the environment
-- setting an application up for predefined deployments (creating symlinks for developers, setting env variables)
-- ssh into the deployed boxes and predefine the common tasks
-  to be ran without having to log in (such as restarting a remote service)
 
+What else will be added to examples?
+- running migrations for your app
+- checking app health (dependencies, services, etc)
+
+### Env variables
+
+npm-toolkit will set the environment variables for your tasks if it finds env.json in your settings directory.
+You can use --env switch to quickly change environment configuration, for example typing "nt --env=yourfile" will load variables from "env.yourfile.json".
 
 ### Displaying tasks in the interactive menu
 Assuming you defined your task as "app.js", here is the sample entry you add to tasks.main.json:
@@ -108,18 +118,15 @@ Then in your app folder:
 ln -s /usr/local/lib/node_modules/npm-toolkit ./npm-toolkit-rc/node_modules/npm-toolkit
 ```
 
-And you're good to go. You can make changes to the code and contribute :)
+And you're good to go. Making changes to the code and contributing is encouraged :)
 
 
 ### To do
 
-This will have to be a long list of features since there is a lot of stuff to write ;)
+There's still plenty to do around here, including but not limited to:
 
-* Pretty much everything on the list of example uses + make standard tasks generic to be reusable
-* Write documentation and proper example configurations
-* Starting services as a daemon
+* Make generic reusable tasks as examples
+* Improve documentation
+* Allow starting a task as a daemon
 * Jumping in and out of daemon's stdout stream
 * Create a REST API to communicate between instances of npm-toolkit (with permissions system)
-* Unify the internal API
-* Write a parser for userdata.ntkrc
-* Write a parser for commands.json to generate interactive menu & Web interface

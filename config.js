@@ -3,11 +3,12 @@ var args = require('nomnom')().parse();
 var fs = require('fs');
 var path = require('path');
 var debug = args.debug || args.d || false;
+var settingsDir = args.settings;
 
 var _cfg = {
   constants: {
     version: require('./package.json').version,
-    settingsDir: 'npm-toolkit-rc',
+    settingsDir: settingsDir || 'npm-toolkit-rc',
     userdataFilename: 'userdata.ntkrc'
   },
   paths: {}
@@ -21,12 +22,23 @@ var parseUserdata = function (path) {
 };
 
 var setEnvVars = function (path) {
-  var env = args.config + '.';
+  var env = (args.env ? args.env + '.' : '');
+  var file = path + '/' + 'env.' + env + 'json'
+  if (!fs.existsSync(file)) {
+    return;
+  }
 
-  var json = JSON.parse(fs.readFileSync(path + '/' + 'env.' + (args.config ? args.config + '.' : '') + 'json'));
-  if (debug) console.log('\n', 'Setting up following environmental vars', json);
+  try {
+    var json = JSON.parse(fs.readFileSync(file));
+  }
+  catch (e) {
+    console.log('Error parsing file', file);
+    return;
+  }
+
+  if (debug) console.log('\n', 'Setting up following environment vars', json);
   Object.keys(json).forEach(function (key) {
-    if (process.env[key]) console.log('Overwriting variable', key, '(', process.env[key], '->', json[key], ')');
+    if (process.env[key]) console.log('Overwriting environment variable', key, '(' + process.env[key], '->', json[key] + ')');
     process.env[key] = json[key];
   });
 };
