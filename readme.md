@@ -13,6 +13,11 @@ This is in order to ensure integrity of your toolkit and its results regardless 
 
 ## Change log
 
+v0.1.11
+
+Added support for tasks to be executed directly (without the do prefix)
+
+
 v0.1.10
 
 Updated env switch name (used to be config). Updated docs and parser inputs for help screen.
