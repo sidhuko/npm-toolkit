@@ -1,4 +1,4 @@
-// #!/usr/bin/env node
+#!/usr/bin/env node
 
 // Define dependencies
 var parser = require('nomnom')();
