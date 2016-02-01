@@ -1,7 +1,7 @@
 {
   "name": "npm-toolkit",
   "version": "0.1.11",
-  "description": "TL;DR: A small multi-interface launcher for predefined tasks.",
+  "description": "A small multi-interface launcher for predefined tasks.",
   "main": ".",
   "bin": {
     "npm-toolkit": "index.js",
