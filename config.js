@@ -23,13 +23,15 @@ var parseUserdata = function (path) {
 
 var setEnvVars = function (path) {
   var env = (args.env ? args.env + '.' : '');
-  var file = path + '/' + 'env.' + env + 'json'
+  var file = path + '/' + 'env.' + env + 'json';
   if (!fs.existsSync(file)) {
     return;
   }
 
+
+  var json;
   try {
-    var json = JSON.parse(fs.readFileSync(file));
+    json = JSON.parse(fs.readFileSync(file));
   }
   catch (e) {
     console.log('Error parsing file', file);
