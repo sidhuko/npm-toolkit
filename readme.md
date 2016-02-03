@@ -13,7 +13,14 @@ This is in order to ensure integrity of your toolkit and its results regardless 
 
 ## Change log
 
-v0.1.11
+v0.1.13
+
+* Added padding in 'nt status' for easier reading
+* Cleaned up files (linting)
+
+
+
+v0.1.12
 
 Added support for tasks to be executed directly (without the do prefix)
 
