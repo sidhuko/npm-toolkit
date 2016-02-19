@@ -68,6 +68,12 @@ var findConfig = function (checkDir) {
 };
 
 if (debug) console.log('\n---------------------------------------');
-findConfig(process.cwd().toString());
+
+
+var initialise = function () {
+  findConfig(process.cwd().toString());
+};
+
 
 module.exports = _cfg;
+module.exports.initialise = initialise;

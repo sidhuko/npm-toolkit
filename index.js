@@ -9,6 +9,7 @@ var Commands = require('./lib/commands');
 var Helpers = require('./lib/helpers');
 var config = require('./config');
 
+config.initialise();
 // Helpers.ulimit.set(2048);
 
 // Define the Application function
