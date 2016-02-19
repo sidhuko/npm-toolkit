@@ -4,7 +4,6 @@
   "description": "Highly customisable script launcher.",
   "main": ".",
   "bin": {
-    "npm-toolkit": "index.js",
     "nt": "index.js"
   },
   "scripts": {
