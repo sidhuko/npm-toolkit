@@ -1,7 +1,7 @@
 {
   "name": "npm-toolkit",
-  "version": "0.1.14",
-  "description": "A small multi-interface launcher for predefined tasks.",
+  "version": "0.2.0",
+  "description": "Highly customisable script launcher.",
   "main": ".",
   "bin": {
     "npm-toolkit": "index.js",
