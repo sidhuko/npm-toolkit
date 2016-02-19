@@ -17,28 +17,32 @@ var Application = function () {
   parser
     .option('quiet', {
       abbr: 'q',
-      flag: false,
-      default: _.get(config, 'userdata.launcher.quietByDefault', false),
+      flag: true,
+      default: _.get(config, 'settings.local.quiet', false),
       help: 'Quiet mode'
     })
-    .option('env', {
-      help: 'Variant of the env vars file to load'
+    .option('debug', {
+      abbr: 'd',
+      default: _.get(config, 'settings.local.debug', false),
+      flag: true,
+      help: 'Enable debug mode'
     })
-    .option('settings', {
-      default: _.get(config, 'constants.settingsDir', 'npm-toolkit-rc'),
-      help: 'Name of the settings directory'
-    // })
-    // .option('debug', {
-    //   default: false,
-    //   help: 'Enable debug mode'
-    // })
-    // .option('version', {
-    //   flag: true,
-    //   abbr: 'v',
-    //   help: 'Prints version',
-    //   callback: function() {
-    //     return 'npm-toolkit ' + _.get(config, 'constants.version', '');
-    //   }
+    .option('env', {
+      abbr: 'e',
+      help: 'Env variables file to load'
+    })
+    .option('config', {
+      abbr: 'c',
+      default: _.get(config, 'const.settingsDir', './ntrc'),
+      help: 'Location of nt config (ntrc) directory'
+    })
+    .option('version', {
+      flag: true,
+      abbr: 'v',
+      help: 'Prints version',
+      callback: function() {
+        return 'npm-toolkit ' + _.get(config, 'const.version', '');
+      }
     });
 
 
