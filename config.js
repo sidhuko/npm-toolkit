@@ -110,35 +110,65 @@ var parseSettingsJson = function (dir) {
 };
 
 
-/*
-  Reads env.{env}.json files and sets appropriate env variables on the process
+/**
+ * Merges the env vars in the following order:
+ * - base vars
+ * - local overrides to base vars,
+ * - env specific vars
+ * - local overrides to env specific vars
+ *
+ * @param {string} env - Environment variant to use
+ * @return {object} Flattened env vars object
+ */
+var getFlattenedEnvVarsFromSettings = function (env) {
+  var fullVarsObject = {};
 
-  @String path  Path to ntrc directory
-*/
-var setEnvVars = function (path) {
-  var env = (args.env ? args.env + '.' : '');
-  var file = path + '/' + 'env.' + env + 'json';
-  if (!fs.existsSync(file)) {
-    return;
-  }
+  // Read base env vars
+  var baseEnvVars = _.get(_cfg, 'settings.env._', {});
+  var baseEnvVarsLocal = _.get(_cfg, 'settings.local.env._', {});
 
-  var json;
-  try {
-    json = JSON.parse(fs.readFileSync(file));
-  }
-  catch (e) {
-    console.log('Error parsing file', file);
-    return;
-  }
+  // Read specific env vars
+  var specificEnvVars = _.get(_cfg, 'settings.env.' + env, {});
+  var specificEnvVarsLocal = _.get(_cfg, 'settings.local.env.' + env, {});
 
-  if (debug) console.log('\n', 'Setting up following environment vars', json);
-  Object.keys(json).forEach(function (key) {
-    if (process.env[key]) console.log('Overwriting environment variable', key, '(' + process.env[key], '->', json[key] + ')');
-    process.env[key] = json[key];
+  // Merge it all
+  _.merge(fullVarsObject, baseEnvVars);
+  _.merge(fullVarsObject, baseEnvVarsLocal);
+
+  _.merge(fullVarsObject, specificEnvVars);
+  _.merge(fullVarsObject, specificEnvVarsLocal);
+
+  return fullVarsObject;
+}
+
+
+/**
+ * Sets env vars for specified env
+ * @param {string} env - Environment variant to use
+ */
+var setEnvVars = function (env) {
+  var envVars = getFlattenedEnvVarsFromSettings(env);
+
+  Object.keys(envVars).forEach(function (key) {
+    if (process.env[key]) {
+      console.log(chalk.grey('Overwriting environment variable', key, '(' + process.env[key], '->', envVars[key] + ')'));
+    } else {
+      console.log(chalk.grey('Setting environment variable', key, '(' + envVars[key] + ')'));
+    }
+    process.env[key] = envVars[key];
   });
 };
 
 
+
+
+/**
+ * Locates the NTRC folder in specified Location
+ * Keeps going up in the filesystem until valid ntrc is found or false is returned
+ *
+ * @param {string} dir - Directory to look in
+ * @return {mixed} (string) directory or (bool) false
+ */
 var locateNTRC = function (dir) {
 
   // ntrc lookup
@@ -168,9 +198,13 @@ var locateNTRC = function (dir) {
 
   function _handleCaseNtrcAliasFound (dir) {
     console.log('Alias found in', dir);
-    var aliasDir = path.resolve(fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim());
-    console.log('Alias points to "' +  aliasDir + '"');
-    return aliasDir;
+
+    var aliasContent = fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim();
+    var aliasDest = path.resolve(dir, aliasContent);
+
+    console.log('Alias points to "' +  aliasDest + '"');
+
+    return aliasDest;
   }
 
   // NOT FOUND
@@ -200,7 +234,13 @@ var locateNTRC = function (dir) {
 
 
 
-
+/**
+ * Resolves project root based on "root" property specified in settings.JSON
+ * If "root" property is not specified a folder above ntrc is assumed as default
+ *
+ * @param {string} ntrc - Path to ntrc directory
+ * @return {string} Resolved root path
+ */
 var locateRoot = function (ntrc) {
   var resolved = path.join(_cfg.resolved.ntrc, (_cfg.settings.root || '..'));
   if (debug) console.log('Root set at', resolved);
@@ -213,7 +253,19 @@ var locateRoot = function (ntrc) {
 if (debug) console.log('\n---------------------------------------');
 
 
+/**
+ * Initialises config, starting in directory passed in
+ * Kicks off locateNTRC to find a valid NTRC path to use
+ *
+ * @param {string} dir - Directory to start lookup in
+ * @return {bool} Indicates whether a valid NTRC folder has been located
+ */
 var initialise = function (dir) {
+  if (_cfg.args.config) {
+    console.log('Config argument provided, skipping to', _cfg.args.config);
+    dir = _cfg.args.config;
+  }
+
   // if (['status', 'list', 'info'].indexOf(taskArg) !== -1) ignoreErrors = true;
   var ntrcLocationObject = configPathToObject(dir);
   ntrcLocationAbsolute = ntrcLocationObject.root + '/' + ntrcLocationObject.settingsDirname;
@@ -221,15 +273,19 @@ var initialise = function (dir) {
 
 
   _cfg.resolved.ntrc = locateNTRC(ntrcLocationAbsolute);
-  _cfg.resolved.settingsDirname = configPathToObject(_cfg.resolved.ntrc).settingsDirname;
 
-  console.log('_cfg.resolved.ntrc', _cfg.resolved.ntrc);
+  if (_cfg.resolved.ntrc) {
+    _cfg.resolved.settingsDirname = configPathToObject(_cfg.resolved.ntrc).settingsDirname;
 
-  _cfg.settings = parseSettingsJson(_cfg.resolved.ntrc);
+    if (debug) console.log('_cfg.resolved.ntrc', _cfg.resolved.ntrc);
 
-  _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
+    _cfg.settings = parseSettingsJson(_cfg.resolved.ntrc);
 
-  // parseEnvVars(_cfg.resolved.ntrc)
+    _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
+
+    console.log('_cfg.args.env', _cfg.args.env);
+    setEnvVars(_cfg.args.env);
+  }
 
 
   // console.log('------------------\n' + chalk.green('_cfg object') + ':\n', _cfg, '\n------------------\n');
