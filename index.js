@@ -8,7 +8,7 @@ var Commands = require('./lib/commands');
 var Helpers = require('./lib/helpers');
 var config = require('./config');
 
-config.initialise();
+var ntrcFound = config.initialise();
 // Helpers.ulimit.set(2048);
 
 // Define the Application function
@@ -53,15 +53,19 @@ var Application = function () {
 
   parser.command('help').callback(Commands.help);
 
-  var debug = true;
-  // var debug = false;
-  _.each(Helpers.scanTasks(config.resolved.ntrc), function (fn, name) {
-    if (typeof fn === 'function') {
-      if (debug) console.log('Registering the "' + name + '" command');
-      parser.command(name).callback(fn);
-    }
-  });
+  // helpers.processFlags here to bind?
 
+  // var debug = true;
+  var debug = false;
+
+  if (ntrcFound) {
+    _.each(Helpers.scanTasks(config.resolved.ntrc), function (fn, name) {
+      if (typeof fn === 'function') {
+        if (debug) console.log('Registering the "' + name + '" command');
+        parser.command(name).callback(fn);
+      }
+    });
+  }
 
   // Fallback to CLI if no arguments provided
   parser.nocommand().callback(Commands.cli);
