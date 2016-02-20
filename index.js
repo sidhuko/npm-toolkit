@@ -65,6 +65,7 @@ var Application = function () {
         parser.command(name).callback(fn);
       }
     });
+    console.log('Finished registering tasks');
   }
 
   // Fallback to CLI if no arguments provided
