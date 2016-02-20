@@ -58,8 +58,8 @@ var configPathToObject = function (location) {
   return {
     settingsDirname: tmpArray.pop(),
     root: tmpArray.join('/')
-  }
-}
+  };
+};
 
 
 
@@ -67,8 +67,8 @@ var configPathToObject = function (location) {
 
 
 // var debug = _cfg.args.debug;
-var debug = true;
-// var debug = false;
+// var debug = true;
+var debug = false;
 
 
 /*
@@ -85,7 +85,7 @@ var parseSettingsJson = function (dir) {
 
 
   if (fs.existsSync(projectSettingsPath)) {
-    console.log('projectSettingsPath exists');
+    if (debug) console.log('projectSettingsPath exists');
 
     var projectSettings = readJson(projectSettingsPath);
     // console.log('projectSettings', projectSettings)
@@ -94,7 +94,7 @@ var parseSettingsJson = function (dir) {
 
   //local
   if (fs.existsSync(localSettingsPath)) {
-    console.log('localSettingsPath exists');
+    if (debug) console.log('localSettingsPath exists');
 
     settings.local = readJson(localSettingsPath);
     // console.log('localSettings', localSettings)
@@ -151,9 +151,9 @@ var setEnvVars = function (env) {
 
   Object.keys(envVars).forEach(function (key) {
     if (process.env[key]) {
-      console.log(chalk.grey('Overwriting environment variable', key, '(' + process.env[key], '->', envVars[key] + ')'));
+      if (debug) console.log(chalk.grey('Overwriting environment variable', key, '(' + process.env[key], '->', envVars[key] + ')'));
     } else {
-      console.log(chalk.grey('Setting environment variable', key, '(' + envVars[key] + ')'));
+      if (debug) console.log(chalk.grey('Setting environment variable', key, '(' + envVars[key] + ')'));
     }
     process.env[key] = envVars[key];
   });
@@ -197,12 +197,10 @@ var locateNTRC = function (dir) {
   }
 
   function _handleCaseNtrcAliasFound (dir) {
-    console.log('Alias found in', dir);
-
     var aliasContent = fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim();
     var aliasDest = path.resolve(dir, aliasContent);
 
-    console.log('Alias points to "' +  aliasDest + '"');
+    console.log('Alias found in "' + dir + '", it points to "' +  aliasDest + '"');
 
     return aliasDest;
   }
@@ -283,7 +281,7 @@ var initialise = function (dir) {
 
     _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
 
-    console.log('_cfg.args.env', _cfg.args.env);
+    if (debug) console.log('_cfg.args.env', _cfg.args.env);
     setEnvVars(_cfg.args.env);
   }
 
