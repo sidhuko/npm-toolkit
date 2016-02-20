@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// Define dependencies
 var parser = require('nomnom')();
 var chalk = require('chalk');
 var fs = require('fs');
@@ -55,13 +54,6 @@ var Application = function () {
   parser.command('do').callback(Commands.do);
 
   // parser.command('make').callback(Commands.make);
-
-  // parser.command('init')
-  //   .callback(Commands.init)
-  //   .option('example', {
-  //     position: 0,
-  //     help: 'Use example data'
-  //   });
 
   parser.command('help').callback(Commands.help);
 
