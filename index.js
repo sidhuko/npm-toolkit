@@ -49,10 +49,6 @@ var Application = function () {
   parser.command('status').callback(Commands.status);
   parser.command('list').callback(Commands.list);
 
-  // keeping the "do" command for backwards compatibility.
-  // To be phased out in the next minor versions.
-  parser.command('do').callback(Commands.do);
-
   // parser.command('make').callback(Commands.make);
 
   parser.command('help').callback(Commands.help);
