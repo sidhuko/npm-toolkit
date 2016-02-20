@@ -65,9 +65,9 @@ var Application = function () {
 
   parser.command('help').callback(Commands.help);
 
-  // var debug = true;
-  var debug = false;
-  _.each(Helpers.scanTasks(config.paths.settings), function (fn, name) {
+  var debug = true;
+  // var debug = false;
+  _.each(Helpers.scanTasks(config.resolved.ntrc), function (fn, name) {
     if (typeof fn === 'function') {
       if (debug) console.log('Registering the "' + name + '" command');
       parser.command(name).callback(fn);

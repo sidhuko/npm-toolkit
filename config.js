@@ -228,46 +228,7 @@ var locateNTRC = function (dir) {
 
 
 
-var parseSettings = function (checkDir) {
-  // if (fs.existsSync(checkDir + '/' + _cfg.const.settingsDirname)) {
-  //   if (debug) console.log(_cfg.const.settingsDirname + ' found in ' + checkDir + '\n');
-  //
-  //
-  //   // use _cfg.resolved
-  //   _cfg.paths.root = checkDir;
-  //   _cfg.paths.app = checkDir
-  //   _cfg.paths.settings = [checkDir, _cfg.const.settingsDirname].join('/');
-  //
-  //
-  //   if (debug) console.log('\n', 'Parsing userdata');
-  //   // _cfg.projectSettings = parseUserdata(_cfg.const.settingsDirname + '/' +  _cfg.const.projectSettingsFilename);
-  //   // _cfg.localSettings = parseUserdata(_cfg.const.settingsDirname + '/' +  _cfg.const.localSettingsFilename);
-  //
-  //   _cfg.settings = parseSettings();
-  //
-  //   if (_cfg.userdata.launcher.dir) {
-  //     _cfg.paths.app = checkDir + '/' + _cfg.userdata.launcher.dir;
-  //   }
-  //
-  //   if (debug) console.log('\n', 'Config', _cfg);
-  //   if (debug) console.log('---------------------------------------\n');
-  //   return true;
-  // } else {
-  //   if (debug) console.log(_cfg.const.settingsDirname + ' NOT found in ' + checkDir);
-  //   if (checkDir === '/') {
-  //     console.log('Couldn\'t find ' + _cfg.const.settingsDirname + '. Check if you\'re in the right directory.');
-  //     return process.exit(1);
-  //     // return false;
-  //   }
-  //   var newDir = path.join(checkDir + '/..');
-  //   findParseConfig(newDir);
-  // }
-};
-
 var locateRoot = function (ntrc) {
-  // read _cfg.settings if none specified
-  // console.log('locateRoot ntrc', ntrc);
-  // console.log('locateRoot settings', _cfg.settings.root);
   var resolved = path.join(_cfg.resolved.ntrc, (_cfg.settings.root || '..'));
   console.log('Root set at', resolved);
   return resolved;
@@ -287,7 +248,6 @@ var initialise = function (dir) {
 
 
   _cfg.resolved.ntrc = locateNTRC(ntrcLocationAbsolute);
-  // _cfg.resolved.root = configPathToObject(_cfg.resolved.ntrc).root;
   _cfg.resolved.settingsDirname = configPathToObject(_cfg.resolved.ntrc).settingsDirname;
 
   console.log('_cfg.resolved.ntrc', _cfg.resolved.ntrc);
@@ -296,35 +256,9 @@ var initialise = function (dir) {
 
   _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
 
+  // parseEnvVars(_cfg.resolved.ntrc)
 
 
-  // _cfg.paths.root = dir;
-  // _cfg.paths.app = dir
-  // _cfg.paths.settings = [dir, _cfg.const.settingsDirname].join('/');
-  //
-  // _cfg.settings = parseSettings();
-  //
-  // if (_cfg.userdata.launcher.dir) {
-  //   _cfg.paths.app = dir + '/' + _cfg.userdata.launcher.dir;
-  // }
-  //
-  // if (debug) console.log('\n', 'Config', _cfg);
-  // if (debug) console.log('---------------------------------------\n');
-
-
-
-
-
-  // parseUserSettings(ntrc)
-  // parseEnvVars(ntrc)
-  // scanTasks?
-
-
-
-  // findParseConfig(process.cwd().toString());
-
-  // _cfg.resolved.root = configPathToObject(args.config).root;
-  // _cfg.resolved.settingsDirname = configPathToObject(args.config).settingsDirname;
   console.log('------------------\n' + chalk.green('_cfg object') + ':\n', _cfg, '\n------------------\n');
 };
 
