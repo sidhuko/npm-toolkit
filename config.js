@@ -173,9 +173,8 @@ var locateNTRC = function (dir) {
 
   // ntrc lookup
   var _dirContainsNtrc = function (dir) {
-    return fs.existsSync(dir.rootPath + '/' + _cfg.const.settingsDirname);
-    //dir.settingsDirname
-  }
+    return fs.existsSync(dir + '/' + _cfg.const.settingsDirname);
+  };
 
   // ntrc alias lookup
   var _dirContainsNtrcAlias = function (dir) {
@@ -190,10 +189,9 @@ var locateNTRC = function (dir) {
 
   // FOUND
   function _handleCaseNtrcFound (dir) {
-    if (debug) console.log('ntrc found in', dir);
     if (debug) console.log(_cfg.const.settingsDirname + ' found in ' + dir + '\n');
 
-    return dir;
+    return dir + '/' + _cfg.const.settingsDirname;
   }
 
   function _handleCaseNtrcAliasFound (dir) {
