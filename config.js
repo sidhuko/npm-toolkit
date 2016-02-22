@@ -6,13 +6,11 @@ var readJson = require('./lib/readJson');
 
 var chalk = require('chalk');
 
-// console.log('------------------\n' + chalk.yellow('args object') + ':\n', args, '\n------------------\n');
-
 var _cfg = {
   // constants - binding the fixed values and defaults
   const: {
     version: require('./package.json').version,
-    settingsDirname: 'ntrc', // can be overridden by input from --config path/my-ntrc
+    settingsDirname: 'ntrc',
     settingsDirnameAlias: 'ntrc-alias',
     projectSettingsFilename: 'settings.json',
     localSettingsFilename: 'settings.local.json'
@@ -28,10 +26,6 @@ var _cfg = {
   // final paths to ntrc, root, settingsDirname
   resolved: {}
 };
-
-
-
-
 
 
 
@@ -139,7 +133,7 @@ var getFlattenedEnvVarsFromSettings = function (env) {
   _.merge(fullVarsObject, specificEnvVarsLocal);
 
   return fullVarsObject;
-}
+};
 
 
 /**
@@ -179,7 +173,7 @@ var locateNTRC = function (dir) {
   // ntrc alias lookup
   var _dirContainsNtrcAlias = function (dir) {
     return fs.existsSync(dir + '/' + _cfg.const.settingsDirnameAlias);
-  }
+  };
 
 
   // IS THIS USEFUL? How do we detect that this matches ntrc structure? settings.json?
@@ -223,10 +217,10 @@ var locateNTRC = function (dir) {
     if (_dirContainsNtrcAlias(dir)) {
       return _handleCaseNtrcAliasFound(dir);
     } else {
-      return _handleCaseNotFound(dir)
+      return _handleCaseNotFound(dir);
     }
   }
-}
+};
 
 
 
@@ -241,7 +235,7 @@ var locateRoot = function (ntrc) {
   var resolved = path.join(_cfg.resolved.ntrc, (_cfg.settings.root || '..'));
   if (debug) console.log('Root set at', resolved);
   return resolved;
-}
+};
 
 
 
