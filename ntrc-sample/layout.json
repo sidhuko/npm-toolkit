@@ -1,0 +1,72 @@
+[
+  {
+    "name": "App",
+    "type": "task",
+    "opts": "app"
+  },
+  {
+    "name": "App (debug mode)",
+    "type": "task",
+    "opts": "app debug"
+  },
+  {
+    "name": "Logs",
+    "type": "task",
+    "opts": "log --lines=50"
+  },
+  {
+    "name": "Node Inspector",
+    "type": "task",
+    "opts": "inspector"
+  },
+  {
+    "type": "separator",
+    "disabled": true
+  },
+  {
+    "name": "Lint",
+    "type": "task",
+    "opts": "lint"
+  },
+  {
+    "name": "Test",
+    "type": "task",
+    "opts": "test"
+  },
+  {
+    "name": "Start watchers",
+    "type": "task",
+    "opts": "watch lint test"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "name": "Setup >",
+    "children": [
+      {
+        "type": "separator",
+        "disabled": "true"
+      },
+      {
+        "name": "Status",
+        "type": "nt",
+        "opts": "status"
+      },
+      {
+        "name": "Dependencies",
+        "type": "task",
+        "opts": "dependencies"
+      },
+      {
+        "name": "< Return >",
+        "type": "restart"
+      }
+    ]
+  },
+  {
+    "name": "Exit",
+    "type": "nt",
+    "type": "exit"
+  }
+]

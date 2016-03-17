@@ -104,23 +104,3 @@ You can use --env switch to quickly change environment configuration, for exampl
 Please log issues on https://github.com/vot/npm-toolkit/issues
 
 You can also just check out code and create a pull request, contributors welcome :)
-
-More docs coming. In the meantime - check in code ;)
-
-### Manual installation (development version)
-
-In case you want to use development version and contribute node-toolkit
-checkout the project from GitHub and create links manually:
-```
-  git clone https://github.com/git/npm-toolkit.git
-
-  ln -s $(pwd) /usr/local/lib/node_modules/npm-toolkit
-
-  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
-```
-
-Then in your app folder:
-
-```
-ln -s /usr/local/lib/node_modules/npm-toolkit ./node_modules/npm-toolkit
-```

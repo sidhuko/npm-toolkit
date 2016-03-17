@@ -48,9 +48,7 @@ var Application = function () {
   // register tasks
   parser.command('status').callback(Commands.status);
   parser.command('list').callback(Commands.list);
-
-  // parser.command('make').callback(Commands.make);
-
+  parser.command('init').callback(Commands.init);
   parser.command('help').callback(Commands.help);
 
   // helpers.processFlags here to bind?

@@ -24,7 +24,8 @@ var _cfg = {
   },
 
   // final paths to ntrc, root, settingsDirname
-  resolved: {}
+  resolved: {},
+  initialised: false
 };
 
 
@@ -251,6 +252,9 @@ if (debug) console.log('\n---------------------------------------');
  * @return {bool} Indicates whether a valid NTRC folder has been located
  */
 var initialise = function (dir) {
+  if (_cfg.initialised) {
+    return true;
+  }
   if (_cfg.args.config) {
     console.log('Config argument provided, skipping to', _cfg.args.config);
     dir = _cfg.args.config;
@@ -277,7 +281,7 @@ var initialise = function (dir) {
     setEnvVars(_cfg.args.env);
   }
 
-
+  _cfg.initialised = true;
   // console.log('------------------\n' + chalk.green('_cfg object') + ':\n', _cfg, '\n------------------\n');
   return !!_cfg.resolved.ntrc;
 };
