@@ -184,7 +184,7 @@ var locateNTRC = function (dir) {
 
   // FOUND
   function _handleCaseNtrcFound (dir) {
-    if (debug) console.log('[nt] ' + _cfg.const.settingsDirname + ' found in ' + dir + '\n');
+    if (debug) if (debug) console.log('[nt] ' + _cfg.const.settingsDirname + ' found in ' + dir + '\n');
 
     return dir + '/' + _cfg.const.settingsDirname;
   }
@@ -193,7 +193,7 @@ var locateNTRC = function (dir) {
     var aliasContent = fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim();
     var aliasDest = path.resolve(dir, aliasContent);
 
-    console.log('[nt] Alias found in "' + dir + '", it points to "' +  aliasDest + '"');
+    if (debug) console.log('[nt] Alias found in "' + dir + '", it points to "' +  aliasDest + '"');
 
     return aliasDest;
   }
