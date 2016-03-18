@@ -1,62 +1,46 @@
 [
   {
-    "name": "App",
+    "name": "Dependencies",
     "type": "task",
-    "opts": "app"
-  },
-  {
-    "name": "App (debug mode)",
-    "type": "task",
-    "opts": "app debug"
-  },
-  {
-    "name": "Logs",
-    "type": "task",
-    "opts": "log --lines=50"
-  },
-  {
-    "name": "Node Inspector",
-    "type": "task",
-    "opts": "inspector"
-  },
-  {
-    "type": "separator",
-    "disabled": true
-  },
-  {
-    "name": "Lint",
-    "type": "task",
-    "opts": "lint"
-  },
-  {
-    "name": "Test",
-    "type": "task",
-    "opts": "test"
-  },
-  {
-    "name": "Start watchers",
-    "type": "task",
-    "opts": "watch lint test"
+    "opts": "dependencies"
   },
   {
     "type": "separator"
   },
   {
-    "name": "Setup >",
+    "name": "Mongo >",
     "children": [
       {
-        "type": "separator",
-        "disabled": "true"
+        "name": "Drop DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db drop nt-sample-db"
       },
+      {
+        "name": "Backup DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db dump"
+      },
+      {
+        "name": "Restore DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db restore"
+      },
+      {
+        "name": "< Return >",
+        "type": "restart"
+      }
+    ]
+  },
+  {
+    "name": "Setup >",
+    "children": [
       {
         "name": "Status",
         "type": "nt",
         "opts": "status"
-      },
-      {
-        "name": "Dependencies",
-        "type": "task",
-        "opts": "dependencies"
       },
       {
         "name": "< Return >",

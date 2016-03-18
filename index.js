@@ -59,11 +59,11 @@ var Application = function () {
   if (ntrcFound) {
     _.each(Helpers.scanTasks(config.resolved.ntrc), function (fn, name) {
       if (typeof fn === 'function') {
-        if (debug) console.log('Registering the "' + name + '" command');
+        if (debug) console.log('[nt] Registering the "' + name + '" command');
         parser.command(name).callback(fn);
       }
     });
-    console.log('Finished registering tasks');
+    console.log('[nt] Finished registering tasks');
   }
 
   // Fallback to CLI if no arguments provided
