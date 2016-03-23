@@ -108,9 +108,11 @@ var parseSettingsJson = function (dir) {
 /**
  * Merges the env vars in the following order:
  * - base vars
- * - local overrides to base vars,
  * - env specific vars
+ * - local overrides to base vars,
  * - local overrides to env specific vars
+ *
+ * This ordering allows you to override anything from your local settings
  *
  * @param {string} env - Environment variant to use
  * @return {object} Flattened env vars object
@@ -119,19 +121,19 @@ var getFlattenedEnvVarsFromSettings = function (env) {
   var fullVarsObject = {};
 
   // Read base env vars
-  var baseEnvVars = _.get(_cfg, 'settings.env._', {});
-  var baseEnvVarsLocal = _.get(_cfg, 'settings.local.env._', {});
+  var baseVars = _.get(_cfg, 'settings.env._', {});
+  var envVars = _.get(_cfg, 'settings.env.' + env, {});
 
-  // Read specific env vars
-  var specificEnvVars = _.get(_cfg, 'settings.env.' + env, {});
-  var specificEnvVarsLocal = _.get(_cfg, 'settings.local.env.' + env, {});
+  // Read local overrides
+  var baseVarsLocal = _.get(_cfg, 'settings.local.env._', {});
+  var envVarsLocal = _.get(_cfg, 'settings.local.env.' + env, {});
 
   // Merge it all
-  _.merge(fullVarsObject, baseEnvVars);
-  _.merge(fullVarsObject, baseEnvVarsLocal);
+  _.merge(fullVarsObject, baseVars);
+  _.merge(fullVarsObject, envVars);
 
-  _.merge(fullVarsObject, specificEnvVars);
-  _.merge(fullVarsObject, specificEnvVarsLocal);
+  _.merge(fullVarsObject, baseVarsLocal);
+  _.merge(fullVarsObject, envVarsLocal);
 
   return fullVarsObject;
 };
