@@ -1,4 +1,4 @@
-var args = require('nomnom')().parse();
+var args = require('commander').parse(process.argv);
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
