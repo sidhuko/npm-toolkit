@@ -19,7 +19,7 @@ var returnNtVersion = function () {
 
 // Define the Application function
 var Application = function () {
-  console.log('-commander-');
+  console.log(chalk.grey('[nt] Commander interface'));
   program
     .version(returnNtVersion())
     // .usage('nt [task] <options ...>')

@@ -1,17 +1,24 @@
 # To do
 
 * Switch from nomnom to commander
-* Remove quiet mode, make it default and add verbose output
+* Make sure <init> and <nocommand> bindings still work in commander
 * Improve debugging / verbose output
 
 
+## Refactor app flow to reflect the new scenarios
+* Bypass full config initialisation for "nt init" task
+* Remove quiet mode, make it default and add verbose output
+* Ensure fallback to global install of nt where local copy is not available
+* Break out CLI argument parsing so that options can be reused across tasks (without keeping state)
+* Refactor task specifications to return an object rather than self-executing function by default
+* Reorganise lib folder
+
+
 ## Import
-* Make nt pick up tasks defined in "scripts" section of package.json
-* Consider Grunt and Gulp transition utils
+* Utils for transition from Grunt, Gulp and package.json scripts [nt import grunt/gulp/npm]
 
 
 ## init
-* Bypass config initialisation for "nt init" task
 * Make "nt init" also install npm-toolkit locally if not found (with support for --save, --save-dev, --link)
 * Create a separate "nt install" to allow local installs if node_modules/npm-toolkit not found when executing
 
@@ -22,3 +29,4 @@
 
 ## documentation
 * Improve documentation
+* Create a proper site with quick start and examples (GitHub pages or standalone site)
