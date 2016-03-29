@@ -1,10 +1,11 @@
-var args = require('commander').parse(process.argv);
+var parseCliArgs = require('./lib/parseCliArgs');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var readJson = require('./lib/readJson');
 
 var chalk = require('chalk');
+var args = parseCliArgs();
 
 var _cfg = {
   // constants - binding the fixed values and defaults

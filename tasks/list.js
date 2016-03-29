@@ -2,8 +2,8 @@ var _ = require('lodash');
 var chalk  = require('chalk');
 // var fs = require('fs');
 // var os = require('os');
-var Helpers = require('../helpers');
-var config = require('../../config');
+var Helpers = require('../lib/helpers');
+var config = require('../config');
 
 module.exports = function (opts) {
   var displayInfo = !opts.quiet;

@@ -1,12 +1,14 @@
 module.exports = {
   // Prints information about current npm-toolkit setup
-  status: require('./commands/status'),
+  status: require('./status'),
   // Lists the available commands
-  list: require('./commands/list'),
+  list: require('./list'),
   // Prints help screen
-  help: require('./commands/help'),
+  help: require('./help'),
   // Start the Command Line Interface
-  cli: require('./commands/cli'),
+  cli: require('./cli'),
   // Initialise npm-toolkit in current folder
-  init: require('./commands/init')
+  init: require('./init'),
+  // Initialise npm-toolkit in current folder
+  version: require('./version')
 };

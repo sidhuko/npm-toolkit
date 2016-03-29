@@ -1,8 +1,8 @@
 // define dependencies
 var _ = require('lodash');
-var config = require('../../config');
-var Helpers = require('../helpers');
-var NTInterfaceCLIFactory = require('../NTInterfaceCLI');
+var config = require('../config');
+var Helpers = require('../lib/helpers');
+var NTInterfaceCLIFactory = require('../lib/NTInterfaceCLI');
 
 var debug = false;
 

@@ -1,5 +1,5 @@
 var chalk  = require('chalk');
-var Helpers = require('../helpers');
+var Helpers = require('../lib/helpers');
 
 module.exports = function (opts) {
   Helpers.printHeader('detailed');

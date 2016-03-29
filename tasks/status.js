@@ -2,11 +2,12 @@
 var chalk  = require('chalk');
 // var fs = require('fs');
 var os = require('os');
-var Helpers = require('../helpers');
-var config = require('../../config');
+var Helpers = require('../lib/helpers');
+var config = require('../config');
 
 module.exports = function (opts) {
-  var displayInfo = !opts.quiet;
+  // var displayInfo = !opts.quiet;
+  var displayInfo = false;
   var displayStyle = (displayInfo) ? 'detailed' : 'short';
 
   var print = function (label, value, style) {
