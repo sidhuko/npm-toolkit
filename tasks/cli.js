@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var config = require('../config');
 var Helpers = require('../lib/helpers');
+var loadTasks = require('../lib/loadTasks');
 var NTInterfaceCLIFactory = require('../lib/NTInterfaceCLI');
 
 var debug = false;
@@ -97,7 +98,7 @@ var produceCLIScript = function (screen) {
       //   console.log(chalk.bold('Executing a task: ') + inputCommands.join(' '));
       // }
 
-      var availableTasks = Helpers.scanTasks(config.resolved.ntrc);
+      var availableTasks = loadTasks(config.resolved.ntrc);
       var taskExists = _.has(availableTasks, task);
       if (taskExists) {
         return require(config.resolved.ntrc + '/tasks/' + task)(input);

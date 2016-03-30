@@ -24,6 +24,7 @@ module.exports = function (opts) {
   if (config && config.settings && config.settings.env) {
     print('Available env var sets:     ', Object.keys(config.settings.env).join(','));
   }
+  console.log();
 
   // Helpers.printSummary('detailed');
 };
