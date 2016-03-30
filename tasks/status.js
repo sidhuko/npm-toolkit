@@ -6,32 +6,24 @@ var Helpers = require('../lib/helpers');
 var config = require('../config');
 
 module.exports = function (opts) {
-  // var displayInfo = !opts.quiet;
-  var displayInfo = false;
-  var displayStyle = (displayInfo) ? 'detailed' : 'short';
 
-  var print = function (label, value, style) {
-    if (!style) style = 'detailed';
-
-    if (style === 'short') {
-      console.log(chalk.bold(label + ' ') + value);
-    }
-
-    if (style === 'detailed') {
-      console.log(chalk.bold(label + '\n ') + value + '\n');
-    }
+  var print = function (label, value) {
+    console.log(chalk.bold(label + ' ') + value);
   };
 
-  Helpers.printHeader(displayStyle);
+  // Helpers.printHeader('detailed');
 
-  print('Current location:           ', process.cwd(), displayStyle);
-  print('Project root:               ', config.resolved.root, displayStyle);
-  print('Project settings:           ', config.resolved.ntrc, displayStyle);
-  print('Hostname:                   ', os.hostname(), displayStyle);
-  var osString = [os.type(), os.release(), os.arch()].join(' ');
-  print('Operating system:           ', osString, displayStyle);
-  print('Node version:               ', process.version, displayStyle);
-  print('npm-toolkit version:        ', config.const.version, displayStyle);
+  print('Current location:           ', process.cwd());
+  print('Project root:               ', config.resolved.root);
+  print('Project settings:           ', config.resolved.ntrc);
+  print('Hostname:                   ', os.hostname());
+  var osString = [os.type(), os.release(), os.arch()].join(', ');
+  print('Operating system:           ', osString);
+  print('Node version:               ', process.version);
+  print('npm-toolkit version:        ', config.const.version);
+  if (config && config.settings && config.settings.env) {
+    print('Available env var sets:     ', Object.keys(config.settings.env).join(','));
+  }
 
-  Helpers.printSummary(displayStyle);
+  // Helpers.printSummary('detailed');
 };
