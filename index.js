@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-// var cliInterface = require('./cli');
+var parseCliArgs = require('./lib/parseCliArgs');
 var taskDispatcher = require('./lib/dispatcher');
 
-var runningDirectly = !module.parent;
-var parseCliArgs = require('./lib/parseCliArgs');
+var runningDirectly = (require.main === module);
 // Helpers.ulimit.set(2048);
 
 // var chalk = require('chalk');
@@ -12,6 +11,7 @@ var parseCliArgs = require('./lib/parseCliArgs');
 // var _ = require('lodash');
 // var Commands = require('./lib/commands');
 // var Helpers = require('./lib/helpers');
+// var cliInterface = require('./cli');
 // var config = require('./config');
 
 
@@ -27,5 +27,5 @@ if (runningDirectly) {
   var args = parseCliArgs();
   return taskDispatcher(args);
 } else {
-  module.exports = taskDispatcher;
+  return module.exports = taskDispatcher;
 }

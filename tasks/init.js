@@ -6,7 +6,7 @@ module.exports = function (opts) {
   opts = opts || {};
   // console.log(opts);
 
-  var ntGlobal = path.join(__dirname + '/../..');
+  var ntGlobal = path.join(__dirname + '/..');
   var cwd = process.cwd();
 
   var ntrcExists = fs.existsSync(cwd + '/ntrc');

@@ -1,31 +1,26 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
-// var fs = require('fs');
-// var os = require('os');
-var Helpers = require('../lib/helpers');
+// var Helpers = require('../lib/helpers');
+var scanTasks = require('../lib/scanTasks');
 var config = require('../config');
 
 module.exports = function (opts) {
-  var displayInfo = !opts.quiet;
-  var display = (displayInfo) ? 'detailed' : 'short';
-  var availableTasks = Object.keys(Helpers.scanTasks(config.resolved.ntrc));
+  var availableTasks = scanTasks(config.resolved.ntrc);
 
-  Helpers.printHeader(display);
+  // Helpers.printHeader('detailed');
 
-  // "do" commands
-  if (display === 'detailed') {
-    console.log(chalk.bold(' Available tasks:'));
+  if (!availableTasks.length) {
+    console.log(chalk.bold('No tasks found.'));
     console.log();
-
-    _.forEach(availableTasks, function (command) {
-      console.log(' * ' + command.toString());
-    });
-
-    console.log();
-    console.log('You can run them by typing npm-toolkit do [task]');
+    console.log('You don\'t seem to be in the right directory.')
+    console.log('You can run type nt status to check that.');
+    console.log('You can also initialise nt in current directory with nt init.');
   } else {
     console.log(chalk.bold('Available tasks:  ') + availableTasks.join('  '));
+    console.log();
+    console.log('You can run them by typing nt [task].');
+    console.log('You can get more help on their usage by typing nt help [task].');
   }
 
-  Helpers.printSummary(display);
+  // Helpers.printSummary('detailed');
 };
