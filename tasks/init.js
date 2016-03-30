@@ -52,9 +52,9 @@ module.exports = function (opts) {
 
   // execute
   if (ntrcExists) {
-    methods.installNt();
+    return methods.installNt();
   } else {
-    methods.copyNtrc(function (err) {
+    return methods.copyNtrc(function (err) {
       if (err) {
         console.log(err);
         return;
