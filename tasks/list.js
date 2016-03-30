@@ -12,14 +12,15 @@ module.exports = function (opts) {
   if (!availableTasks.length) {
     console.log(chalk.bold('No tasks found.'));
     console.log();
-    console.log('You don\'t seem to be in the right directory.')
-    console.log('You can run type nt status to check that.');
+    console.log('You don\'t seem to be in the right directory - type nt status for details.');
     console.log('You can also initialise nt in current directory with nt init.');
-  } else {
-    console.log(chalk.bold('Available tasks:  ') + availableTasks.join('  '));
     console.log();
-    console.log('You can run them by typing nt [task].');
-    console.log('You can get more help on their usage by typing nt help [task].');
+  } else {
+    console.log(chalk.bold('Available tasks:')),
+    console.log(availableTasks.join(', '));
+    console.log();
+    console.log('To execute one type nt [task]. For help use nt help [task].');
+    console.log();
   }
 
   // Helpers.printSummary('detailed');
