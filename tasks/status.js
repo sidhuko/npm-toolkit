@@ -10,12 +10,12 @@ module.exports = function (opts) {
   var print = function (label, value) {
     console.log(chalk.bold(label + ' ') + value);
   };
-
+  var ntrcFound = config.initialise();
   // Helpers.printHeader('detailed');
 
   print('Current location:           ', process.cwd());
-  print('Project root:               ', config.resolved.root);
-  print('Project settings:           ', config.resolved.ntrc);
+  print('Project root:               ', ntrcFound ? config.resolved.root : 'ntrc not found');
+  print('Project settings:           ', ntrcFound ? config.resolved.ntrc : 'ntrc not found');
   print('Hostname:                   ', os.hostname());
   var osString = [os.type(), os.release(), os.arch()].join(', ');
   print('Operating system:           ', osString);

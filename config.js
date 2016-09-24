@@ -205,7 +205,7 @@ var locateNTRC = function (dir) {
   function _handleCaseNotFound (dir) {
     if (debug) console.log('[nt] ' + _cfg.const.settingsDirname + ' NOT found in ' + dir);
     if (dir === '/') {
-      if (args[0] && (args[0] === 'init' || args[0] === 'status')) {
+      if (args.args[0] && (args.args[0] === 'init' || args.args[0] === 'status')) {
         return false;
       }
       console.log('[nt] Couldn\'t find ' + _cfg.const.settingsDirname + '. Check if you\'re in the right directory.');
