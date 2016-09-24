@@ -1,7 +1,5 @@
 # To do
 
-* Switch from nomnom to commander
-* Make sure <init> and <nocommand> bindings still work in commander
 * Improve debugging / verbose output
 
 
@@ -9,7 +7,6 @@
 * Bypass full config initialisation for "nt init" task
 * Remove quiet mode, make it default and add verbose output
 * Ensure fallback to global install of nt where local copy is not available
-* Break out CLI argument parsing so that options can be reused across tasks (without keeping state)
 * Refactor task specifications to return an object rather than self-executing function by default
 * Reorganise lib folder
 
@@ -24,7 +21,7 @@
 
 
 ## process spawning
-* Allow starting a task as a daemon + jumping into stdout stream [tmux/screen]
+* Allow starting a task as a daemon + jumping into stdout stream [tmux/screen style]
 
 
 ## documentation

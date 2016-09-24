@@ -1,13 +1,23 @@
 ## npm-toolkit
 
-Highly customisable script launcher. Flexibility by design.
-TL;DR: a fancy "npm run" wrapper. It's like Grunt or Gulp but without getting in your way or imposing their ways of doing things.
+Highly flexible script launcher.
 
-A small command line utility will provide you with a prompt-based menu with predefined tasks.
-It allows you to create workflows as custom as you need them to be.
+It's like Grunt or Gulp but without imposing too much structure.
+
+Simply add a script to ntrc/tasks folder in your application and you're ready to go.
+
+It also comes with an interactive prompt menu for convenience.
+Create workflows as custom as you need them to be.
 
 
 ## Change log
+
+v0.2.2
+
+* Replaced several libraries / general cleanup
+* Implementing new layout.json model
+* More sensible option parsing
+
 
 v0.2.0
 
@@ -81,7 +91,8 @@ You can run them by typing "nt [task-name]" from anywhere within your project
 You can use a ntrc directory outside your working dir with --config=/path-to-my-project/ntrc switch.
 This can be useful for registering custom aliases in a multi-project configurations.
 
-You can also put a
+You can also create a ntrc-alias file anywhere which should be
+a text file with a path to the desired ntrc folder.
 
 
 ### Commands

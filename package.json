@@ -1,10 +1,10 @@
 {
   "name": "npm-toolkit",
-  "version": "0.2.2-alpha-custom",
+  "version": "0.2.2",
   "description": "Highly customisable script launcher. Flexible by design.",
   "main": ".",
   "bin": {
-    "nt": "index.js"
+    "nt": "cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
