@@ -4,8 +4,10 @@ var config = require('../config');
 var Helpers = require('../lib/helpers');
 var loadTasks = require('../lib/loadTasks');
 var NTInterfaceCLIFactory = require('../lib/NTInterfaceCLI');
+var parseCliArgs = require('../lib/parseCliArgs');
 
-var debug = false;
+var args = parseCliArgs();
+var verbose = args.opts.verbose;
 
 //Preprocessing functions
 
@@ -37,7 +39,7 @@ var produceCLIScreen = function (screen) {
 
   var output = [];
   _.forEach(optsFiltered, function (option) {
-    if (debug) console.log(option);
+    if (verbose) console.log(option);
     var type = option.type.toLowerCase();
     if (type === 'separator') {
       output.push(NTInterfaceCLIFactory.helpers.separator);
@@ -78,8 +80,8 @@ var produceCLIScript = function (screen) {
   };
 
   var returnable = function (answers) {
-    if (debug) console.log(screen);
-    if (debug) console.log(answers);
+    if (verbose) console.log(screen);
+    if (verbose) console.log(answers);
     //temporary override
     screen = 'main';
     var answer = _.findWhere(optsFiltered, {'name': answers[screen]});

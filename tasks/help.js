@@ -13,14 +13,14 @@ module.exports = function () {
   console.log(' * execute commands directly (' + chalk.bold('nt [command name]') + ')');
   console.log();
   console.log(chalk.bold('You can also pass the arguments to customise the behaviour:'));
-  console.log(' * --debug or -d for a more detailed output');
+  console.log(' * --verbose or -v for a more detailed output');
   console.log(' * --env=[file] for an alternative environmetal variables file to be loaded');
   console.log(' * --config=[dirname] for a custom config directory (ntrc)');
   console.log();
   console.log(chalk.bold('More information:'));
   console.log(' * nt help: This screen');
   console.log(' * nt list: View available commands');
-  console.log(' * nt status: Debug/environment information');
+  console.log(' * nt status: Environment information');
 
   Helpers.printLine();
 };
