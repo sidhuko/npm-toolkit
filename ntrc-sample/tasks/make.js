@@ -38,5 +38,5 @@
 //     console.log('Created ' + filename);
 //   }
 //
-//   Helpers.printSummary(displayStyle);
+//   Helpers.printLine(displayStyle);
 // };

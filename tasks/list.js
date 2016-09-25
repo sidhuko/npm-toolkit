@@ -4,11 +4,10 @@ var chalk  = require('chalk');
 var loadTasks = require('../lib/loadTasks');
 var config = require('../config');
 
-module.exports = function (opts) {
-  config.initialise();
+module.exports = function () {
   var availableTasks = loadTasks(config.resolved.ntrc);
 
-  // Helpers.printHeader('detailed');
+  // Helpers.printHeader();
 
   if (!availableTasks.length) {
     console.log(chalk.bold('No tasks found.'));
@@ -24,5 +23,5 @@ module.exports = function (opts) {
     console.log();
   }
 
-  // Helpers.printSummary('detailed');
+  // Helpers.printLine();
 };

@@ -1,8 +1,8 @@
 var chalk  = require('chalk');
 var Helpers = require('../lib/helpers');
 
-module.exports = function (opts) {
-  Helpers.printHeader('detailed');
+module.exports = function () {
+  Helpers.printHeader();
 
   console.log(chalk.bold('TL;DR: npm-toolkit is essentially a fancy task runner.'));
   console.log('It is written in a way that gives you all the flexibility you need');
@@ -22,5 +22,5 @@ module.exports = function (opts) {
   console.log(' * nt list: View available commands');
   console.log(' * nt status: Debug/environment information');
 
-  Helpers.printSummary('detailed');
+  Helpers.printLine();
 };

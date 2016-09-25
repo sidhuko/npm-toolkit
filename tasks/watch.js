@@ -27,12 +27,9 @@ module.exports = function (opts) {
     result += '\nType "nt list" for the list of available tasks.';
   }
 
-  var summaryStyle = displayInfo ? 'detailed' : 'short';
-  Helpers.printHeader(summaryStyle);
-  //
+  Helpers.printHeader();
+
   if (result) console.log(result);
   if (fn && typeof fn === 'function') fn(opts);
-  //
-  Helpers.printSummary(summaryStyle);
-  //if (displayInfo) Helpers.printSummary(summaryStyle, ApplicationArguments);
+  Helpers.printLine();
 };
