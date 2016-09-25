@@ -99,9 +99,10 @@ var produceCLIScript = function (screen) {
       // }
 
       var availableTasks = loadTasks(config.resolved.ntrc);
-      var taskExists = _.has(availableTasks, task);
+      var taskExists = _.includes(availableTasks, task);
+
       if (taskExists) {
-        return require(config.resolved.ntrc + '/tasks/' + task)(input);
+        return loadTasks(config.resolved.ntrc, task)();
       }
       console.log('\n:-( Task "' + task + '" not found.');
       console.log('Type "nt list" to see available tasks.\n');
@@ -141,7 +142,7 @@ var initialisePrompt = function (screen) {
 
 // Export the function
 module.exports = function (opts) {
-  var settingsExist = true;
+  var settingsExist = config.initialised;
   if (!settingsExist) {
     console.log();
     console.log('npm-toolkit installation not found in current location or in the folders above.');

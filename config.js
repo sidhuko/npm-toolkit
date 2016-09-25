@@ -248,4 +248,6 @@ var initialise = function (dir) {
 initialise();
 
 module.exports = _cfg;
-module.exports.initialise = initialise;
+module.exports.initialise = function () {
+  console.trace('Don\'t use config.initialise explicitly, the config will initialise itself');
+};
