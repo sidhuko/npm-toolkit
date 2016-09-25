@@ -1,8 +1,6 @@
 ## npm-toolkit
 
-Highly flexible script launcher.
-
-It's like Grunt or Gulp but without imposing too much structure.
+Flexible script launcher. Like Grunt or Gulp but without imposing a lot of structure.
 
 Simply add a script to ntrc/tasks folder in your application and you're ready to go.
 
@@ -15,7 +13,6 @@ Create workflows as custom as you need them to be.
 v0.2.2
 
 * Replaced several libraries / general cleanup
-* Implementing new layout.json model
 * More sensible option parsing
 * --debug is now --verbose
 
