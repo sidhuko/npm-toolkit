@@ -1,10 +1,13 @@
 // define dependencies
 var _ = require('lodash');
-var config = require('../../config');
-var Helpers = require('../helpers');
-var NTInterfaceCLIFactory = require('../NTInterfaceCLI');
+var config = require('../config');
+var Helpers = require('../lib/helpers');
+var loadTasks = require('../lib/loadTasks');
+var NTInterfaceCLIFactory = require('../lib/NTInterfaceCLI');
+var parseCliArgs = require('../lib/parseCliArgs');
 
-var debug = false;
+var args = parseCliArgs();
+var verbose = args.opts.verbose;
 
 //Preprocessing functions
 
@@ -36,7 +39,7 @@ var produceCLIScreen = function (screen) {
 
   var output = [];
   _.forEach(optsFiltered, function (option) {
-    if (debug) console.log(option);
+    if (verbose) console.log(option);
     var type = option.type.toLowerCase();
     if (type === 'separator') {
       output.push(NTInterfaceCLIFactory.helpers.separator);
@@ -77,8 +80,8 @@ var produceCLIScript = function (screen) {
   };
 
   var returnable = function (answers) {
-    if (debug) console.log(screen);
-    if (debug) console.log(answers);
+    if (verbose) console.log(screen);
+    if (verbose) console.log(answers);
     //temporary override
     screen = 'main';
     var answer = _.findWhere(optsFiltered, {'name': answers[screen]});
@@ -97,10 +100,11 @@ var produceCLIScript = function (screen) {
       //   console.log(chalk.bold('Executing a task: ') + inputCommands.join(' '));
       // }
 
-      var availableTasks = Helpers.scanTasks(config.resolved.ntrc);
-      var taskExists = _.has(availableTasks, task);
+      var availableTasks = loadTasks(config.resolved.ntrc);
+      var taskExists = _.includes(availableTasks, task);
+
       if (taskExists) {
-        return require(config.resolved.ntrc + '/tasks/' + task)(input);
+        return loadTasks(config.resolved.ntrc, task)();
       }
       console.log('\n:-( Task "' + task + '" not found.');
       console.log('Type "nt list" to see available tasks.\n');
@@ -140,7 +144,7 @@ var initialisePrompt = function (screen) {
 
 // Export the function
 module.exports = function (opts) {
-  var settingsExist = true;
+  var settingsExist = config.initialised;
   if (!settingsExist) {
     console.log();
     console.log('npm-toolkit installation not found in current location or in the folders above.');

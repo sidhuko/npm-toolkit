@@ -1,10 +1,10 @@
 {
   "name": "npm-toolkit",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Highly customisable script launcher. Flexible by design.",
   "main": ".",
   "bin": {
-    "nt": "index.js"
+    "nt": "cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,11 +21,10 @@
   "homepage": "https://github.com/vot/npm-toolkit",
   "dependencies": {
     "chalk": "^1.0.0",
-    "cli": "^0.8.0",
+    "clarg": "0.0.2",
     "fs-extra": "^0.21.0",
     "glob": "^5.0.10",
     "inquirer": "^0.5.1",
-    "lodash": "^3.9.3",
-    "nomnom": "^1.8.1"
+    "lodash": "^3.9.3"
   }
 }

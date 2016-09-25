@@ -1,7 +1,8 @@
 var _ = require('lodash');
 var fs = require('fs');
 var chalk  = require('chalk');
-var Helpers = require('../helpers');
+var Helpers = require('../lib/helpers');
+var loadTasks = require('../lib/loadTasks');
 var config = require('../../config');
 
 module.exports = function (opts) {
@@ -9,7 +10,7 @@ module.exports = function (opts) {
   var displayInfo = !opts.quiet;
   inputCommands.shift();
   var immediateTask = inputCommands[0];
-  var availableTasks = Helpers.scanTasks(config.resolved.ntrc);
+  var availableTasks = loadTasks(config.resolved.ntrc);
   var taskDefined = _.has(availableTasks, immediateTask);
   var fn, result;
 
@@ -26,12 +27,9 @@ module.exports = function (opts) {
     result += '\nType "nt list" for the list of available tasks.';
   }
 
-  var summaryStyle = displayInfo ? 'detailed' : 'short';
-  Helpers.printHeader(summaryStyle);
-  //
+  Helpers.printHeader();
+
   if (result) console.log(result);
   if (fn && typeof fn === 'function') fn(opts);
-  //
-  Helpers.printSummary(summaryStyle);
-  //if (displayInfo) Helpers.printSummary(summaryStyle, ApplicationArguments);
+  Helpers.printLine();
 };

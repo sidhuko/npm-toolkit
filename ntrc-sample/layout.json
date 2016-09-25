@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Dependencies",
+    "type": "task",
+    "opts": "dependencies"
+  },
+  {
+    "type": "separator"
+  },
+  {
+    "name": "Mongo >",
+    "children": [
+      {
+        "name": "Drop DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db drop nt-sample-db"
+      },
+      {
+        "name": "Backup DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db dump"
+      },
+      {
+        "name": "Restore DB",
+        "disabled": true,
+        "type": "task",
+        "opts": "db restore"
+      },
+      {
+        "name": "< Return >",
+        "type": "restart"
+      }
+    ]
+  },
+  {
+    "name": "Setup >",
+    "children": [
+      {
+        "name": "Status",
+        "type": "nt",
+        "opts": "status"
+      },
+      {
+        "name": "< Return >",
+        "type": "restart"
+      }
+    ]
+  },
+  {
+    "name": "Exit",
+    "type": "nt",
+    "type": "exit"
+  }
+]

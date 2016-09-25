@@ -1,10 +1,11 @@
-var args = require('nomnom')().parse();
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
-var readJson = require('./lib/readJson');
-
 var chalk = require('chalk');
+var readJson = require('./lib/readJson');
+var parseCliArgs = require('./lib/parseCliArgs');
+var Helpers = require('./lib/helpers');
+var args = parseCliArgs();
 
 var _cfg = {
   // constants - binding the fixed values and defaults
@@ -16,30 +17,23 @@ var _cfg = {
     localSettingsFilename: 'settings.local.json'
   },
 
-  // keep raw input of args here, use resolved object to parse them
-  args: {
-    debug: args.debug || args.d,// || false,
-    config: args.config || args.c,
-    env: args.env || args.e
-  },
+  opts: args.opts,
 
   // final paths to ntrc, root, settingsDirname
-  resolved: {}
+  resolved: {},
+  initialised: false
 };
+
+var verbose = _cfg.opts.verbose;
 
 
 
 /**
-  Breaks config path into object with parts
-  Can parse raw --config argument
-
-  Config switch should support:
-  nt list --config=my-custom-ntrc
-  nt list --config=~/my-project-path/app/ntrc
-*/
-var configPathToObject = function (location) {
+ * Breaks config path into object with parts
+ */
+var resolveConfigPath = function (location) {
   if (!location) {
-    location = './ntrc';
+    location = './';
   }
 
   // if path begins with '~' replace it with home directory
@@ -47,61 +41,38 @@ var configPathToObject = function (location) {
     location = location.replace('~', process.env.HOME);
   }
 
-  var tmpArray = path.resolve(location).split('/');
-
   return {
-    settingsDirname: tmpArray.pop(),
-    root: tmpArray.join('/')
+    settingsDirname: _cfg.const.settingsDirname,
+    root: path.resolve(location)
   };
 };
 
 
 
-
-
-
-// var debug = _cfg.args.debug;
-// var debug = true;
-var debug = false;
-
-
-/*
-  Parses settings.json and settings.local.json in a given location
-*/
+/**
+ * Parses settings.json and settings.local.json in a given location
+ */
 var parseSettingsJson = function (dir) {
-  if (debug) console.log('parseSettingsJson in "' + dir + '"');
+  if (verbose) console.log('[nt] Trying to parse settings in ' + dir);
   var projectSettingsPath = dir + '/' + _cfg.const.projectSettingsFilename;
   var localSettingsPath = dir + '/' + _cfg.const.localSettingsFilename;
-  if (debug) console.log('projectSettingsPath', projectSettingsPath);
-  if (debug) console.log('localSettingsPath', localSettingsPath);
 
   var settings = {};
 
-
   if (fs.existsSync(projectSettingsPath)) {
-    if (debug) console.log('projectSettingsPath exists');
-
-    var projectSettings = readJson(projectSettingsPath);
-    // console.log('projectSettings', projectSettings)
-    settings = projectSettings;
+    if (verbose) console.log('[nt] ' + projectSettingsPath + ' exists');
+    settings = readJson(projectSettingsPath);
   }
 
-  //local
   if (fs.existsSync(localSettingsPath)) {
-    if (debug) console.log('localSettingsPath exists');
-
+    if (verbose) console.log('[nt] ' + localSettingsPath + ' exists');
     settings.local = readJson(localSettingsPath);
-    // console.log('localSettings', localSettings)
-    // _.merge(settings, localSettings);
   }
 
   // console.log(settings);
-
-
-  // setEnvVars(dir);
-  // setEnvVars(settings);
   return settings;
 };
+
 
 
 /**
@@ -111,6 +82,8 @@ var parseSettingsJson = function (dir) {
  * - env specific vars
  * - local overrides to env specific vars
  *
+ * This ordering allows you to override anything from your local settings
+ *
  * @param {string} env - Environment variant to use
  * @return {object} Flattened env vars object
  */
@@ -118,22 +91,23 @@ var getFlattenedEnvVarsFromSettings = function (env) {
   var fullVarsObject = {};
 
   // Read base env vars
-  var baseEnvVars = _.get(_cfg, 'settings.env._', {});
-  var baseEnvVarsLocal = _.get(_cfg, 'settings.local.env._', {});
+  var baseVars = _.get(_cfg, 'settings.env._', {});
+  var envVars = _.get(_cfg, 'settings.env.' + env, {});
 
-  // Read specific env vars
-  var specificEnvVars = _.get(_cfg, 'settings.env.' + env, {});
-  var specificEnvVarsLocal = _.get(_cfg, 'settings.local.env.' + env, {});
+  // Read local overrides
+  var baseVarsLocal = _.get(_cfg, 'settings.local.env._', {});
+  var envVarsLocal = _.get(_cfg, 'settings.local.env.' + env, {});
 
   // Merge it all
-  _.merge(fullVarsObject, baseEnvVars);
-  _.merge(fullVarsObject, baseEnvVarsLocal);
+  _.merge(fullVarsObject, baseVars);
+  _.merge(fullVarsObject, baseVarsLocal);
 
-  _.merge(fullVarsObject, specificEnvVars);
-  _.merge(fullVarsObject, specificEnvVarsLocal);
+  _.merge(fullVarsObject, envVars);
+  _.merge(fullVarsObject, envVarsLocal);
 
   return fullVarsObject;
 };
+
 
 
 /**
@@ -145,14 +119,13 @@ var setEnvVars = function (env) {
 
   Object.keys(envVars).forEach(function (key) {
     if (process.env[key]) {
-      if (debug) console.log(chalk.grey('Overwriting environment variable', key, '(' + process.env[key], '->', envVars[key] + ')'));
+      if (verbose) console.log(chalk.grey('[nt] Overwriting environment variable', key + ':', process.env[key], '->', envVars[key]));
     } else {
-      if (debug) console.log(chalk.grey('Setting environment variable', key, '(' + envVars[key] + ')'));
+      if (verbose) console.log(chalk.grey('[nt] Setting environment variable', key + ':', envVars[key]));
     }
     process.env[key] = envVars[key];
   });
 };
-
 
 
 
@@ -164,52 +137,45 @@ var setEnvVars = function (env) {
  * @return {mixed} (string) directory or (bool) false
  */
 var locateNTRC = function (dir) {
-
-  // ntrc lookup
   var _dirContainsNtrc = function (dir) {
     return fs.existsSync(dir + '/' + _cfg.const.settingsDirname);
   };
 
-  // ntrc alias lookup
   var _dirContainsNtrcAlias = function (dir) {
     return fs.existsSync(dir + '/' + _cfg.const.settingsDirnameAlias);
   };
 
-
-  // IS THIS USEFUL? How do we detect that this matches ntrc structure? settings.json?
-  // function _handleCaseIsNtrcDir (dir) {
-  //   return false;
-  // }
-
   // FOUND
   function _handleCaseNtrcFound (dir) {
-    if (debug) console.log(_cfg.const.settingsDirname + ' found in ' + dir + '\n');
+    if (verbose) console.log('[nt] ' + _cfg.const.settingsDirname + ' found in ' + dir);
 
     return dir + '/' + _cfg.const.settingsDirname;
   }
 
+  // ALIAS FOUND
   function _handleCaseNtrcAliasFound (dir) {
     var aliasContent = fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim();
     var aliasDest = path.resolve(dir, aliasContent);
 
-    console.log('Alias found in "' + dir + '", it points to "' +  aliasDest + '"');
+    if (verbose) console.log('[nt] Alias found in ' + dir + '. Jumping to ' + aliasDest);
 
     return aliasDest;
   }
 
   // NOT FOUND
   function _handleCaseNotFound (dir) {
-    if (debug) console.log(_cfg.const.settingsDirname + ' NOT found in ' + dir);
+    if (verbose) console.log('[nt] ' + _cfg.const.settingsDirname + ' NOT found in ' + dir);
     if (dir === '/') {
-      console.log('Couldn\'t find ' + _cfg.const.settingsDirname + '. Check if you\'re in the right directory.');
-      // return process.exit(1);
-      return false;
+      if (args.args[0] && (args.args[0] === 'init' || args.args[0] === 'status')) {
+        return false;
+      }
+      console.log('Couldn\'t find ' + _cfg.const.settingsDirname + ' directory. Check if you\'re in the right location.');
+      console.log('You can also initialise a new project here by typing "nt init"');
+      return process.exit(0);
     }
 
     return locateNTRC(path.join(dir + '/..'));
   }
-
-
 
   if (_dirContainsNtrc(dir)) {
     return _handleCaseNtrcFound(dir);
@@ -229,18 +195,14 @@ var locateNTRC = function (dir) {
  * If "root" property is not specified a folder above ntrc is assumed as default
  *
  * @param {string} ntrc - Path to ntrc directory
- * @return {string} Resolved root path
+ * @return {string} A resolved root path
  */
 var locateRoot = function (ntrc) {
   var resolved = path.join(_cfg.resolved.ntrc, (_cfg.settings.root || '..'));
-  if (debug) console.log('Root set at', resolved);
+  if (verbose) console.log('[nt] Project root set at', resolved);
   return resolved;
 };
 
-
-
-
-if (debug) console.log('\n---------------------------------------');
 
 
 /**
@@ -251,37 +213,41 @@ if (debug) console.log('\n---------------------------------------');
  * @return {bool} Indicates whether a valid NTRC folder has been located
  */
 var initialise = function (dir) {
-  if (_cfg.args.config) {
-    console.log('Config argument provided, skipping to', _cfg.args.config);
-    dir = _cfg.args.config;
+  if (_cfg.initialised) {
+    return true;
   }
 
-  // if (['status', 'list', 'info'].indexOf(taskArg) !== -1) ignoreErrors = true;
-  var ntrcLocationObject = configPathToObject(dir);
-  ntrcLocationAbsolute = ntrcLocationObject.root + '/' + ntrcLocationObject.settingsDirname;
-  if (debug) console.log('Start location', ntrcLocationAbsolute);
+  if (verbose) Helpers.printLine();
 
+  if (_cfg.opts.config) {
+    console.log('[nt] Config argument provided, jumping to', _cfg.opts.config);
+    dir = _cfg.opts.config;
+  }
 
-  _cfg.resolved.ntrc = locateNTRC(ntrcLocationAbsolute);
+  var ntrcLocationObject = resolveConfigPath(dir);
+  _cfg.resolved.ntrc = locateNTRC(ntrcLocationObject.root);
 
   if (_cfg.resolved.ntrc) {
-    _cfg.resolved.settingsDirname = configPathToObject(_cfg.resolved.ntrc).settingsDirname;
+    _cfg.resolved.settingsDirname = resolveConfigPath(_cfg.resolved.ntrc).settingsDirname;
 
-    if (debug) console.log('_cfg.resolved.ntrc', _cfg.resolved.ntrc);
+    // if (verbose) console.log('[nt] _cfg.resolved.ntrc', _cfg.resolved.ntrc);
 
     _cfg.settings = parseSettingsJson(_cfg.resolved.ntrc);
 
     _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
 
-    if (debug) console.log('_cfg.args.env', _cfg.args.env);
-    setEnvVars(_cfg.args.env);
+    if (verbose) console.log('[nt] Environment:', _cfg.opts.env || 'not specified');
+    setEnvVars(_cfg.opts.env);
   }
 
-
+  _cfg.initialised = !!_cfg.resolved.ntrc;
   // console.log('------------------\n' + chalk.green('_cfg object') + ':\n', _cfg, '\n------------------\n');
   return !!_cfg.resolved.ntrc;
 };
 
+initialise();
 
 module.exports = _cfg;
-module.exports.initialise = initialise;
+module.exports.initialise = function () {
+  console.trace('Don\'t use config.initialise explicitly, the config will initialise itself');
+};

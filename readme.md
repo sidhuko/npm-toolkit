@@ -1,13 +1,21 @@
 ## npm-toolkit
 
-Highly customisable script launcher. Flexibility by design.
-TL;DR: a fancy "npm run" wrapper. It's like Grunt or Gulp but without getting in your way or imposing their ways of doing things.
+Flexible script launcher. Like Grunt or Gulp but without imposing a lot of structure.
 
-A small command line utility will provide you with a prompt-based menu with predefined tasks.
-It allows you to create workflows as custom as you need them to be.
+Simply add a script to ntrc/tasks folder in your application and you're ready to go.
+
+It also comes with an interactive prompt menu for convenience.
+Create workflows as custom as you need them to be.
 
 
 ## Change log
+
+v0.2.2
+
+* Replaced several libraries / general cleanup
+* More sensible option parsing
+* --debug is now --verbose
+
 
 v0.2.0
 
@@ -49,8 +57,7 @@ Fixed settings switch.
 
 v0.1.9
 
-Added env.json parser to set environment variables for your apps through a dedicated JSON file. Supports switching to custom files with --env switch.
-By default it looks for env.json, if env switch is set to "yourconfig" then env.yourconfig.json is loaded instead.
+Added --env switch.
 
 
 ### Installing
@@ -69,19 +76,21 @@ At the top-level of your own app create a folder named ntrc.
 You can do this using the following command.
 
 ```
-mkdir ntrc
+nt init
 ```
 
-You add the tasks by creating a Node.js script in ntrc/tasks.
+Init command will create a sample configuration with a few tasks defined.
 These tasks will be picked up automatically and available instantly.
-You can run them by typing "nt [task-name]" from anywhere within your project
+You can run them by typing "nt [task-name]" from anywhere within your project.
+To see what tasks are registered use "nt list".
 
 ### Aliases
 
 You can use a ntrc directory outside your working dir with --config=/path-to-my-project/ntrc switch.
 This can be useful for registering custom aliases in a multi-project configurations.
 
-You can also put a
+You can also create a ntrc-alias file anywhere which should be
+a text file with a path to the desired ntrc folder.
 
 
 ### Commands
@@ -89,7 +98,6 @@ You can also put a
 * nt: interactive prompt
 * nt [task]: run a task directly
 * nt list: lists tasks and file templates
-* nt make [file]: create a file from a template in a current directory
 * nt status: shows the status information
 
 
@@ -99,28 +107,14 @@ npm-toolkit will set the environment variables for you based on env key of your 
 You can use --env switch to quickly change environment configuration, for example typing "nt --env=qa" will load all variables defined in "env.qa" key.
 
 
+### Switches
+
+--env switch toggles environment definitions on.
+--verbose switch will produce detailed log messages about npm-toolkit
+--config switch can be used to point to your application regardless of your current location
+
 ### Logging issues and feature requests
 
 Please log issues on https://github.com/vot/npm-toolkit/issues
 
 You can also just check out code and create a pull request, contributors welcome :)
-
-More docs coming. In the meantime - check in code ;)
-
-### Manual installation (development version)
-
-In case you want to use development version and contribute node-toolkit
-checkout the project from GitHub and create links manually:
-```
-  git clone https://github.com/git/npm-toolkit.git
-
-  ln -s $(pwd) /usr/local/lib/node_modules/npm-toolkit
-
-  ln -s /usr/local/lib/node_modules/npm-toolkit/index.js /usr/local/bin/nt
-```
-
-Then in your app folder:
-
-```
-ln -s /usr/local/lib/node_modules/npm-toolkit ./node_modules/npm-toolkit
-```
