@@ -17,6 +17,7 @@ v0.2.2
 * Replaced several libraries / general cleanup
 * Implementing new layout.json model
 * More sensible option parsing
+* --debug is now --verbose
 
 
 v0.2.0
@@ -59,8 +60,7 @@ Fixed settings switch.
 
 v0.1.9
 
-Added env.json parser to set environment variables for your apps through a dedicated JSON file. Supports switching to custom files with --env switch.
-By default it looks for env.json, if env switch is set to "yourconfig" then env.yourconfig.json is loaded instead.
+Added --env switch.
 
 
 ### Installing
@@ -79,12 +79,13 @@ At the top-level of your own app create a folder named ntrc.
 You can do this using the following command.
 
 ```
-mkdir ntrc
+nt init
 ```
 
-You add the tasks by creating a Node.js script in ntrc/tasks.
+Init command will create a sample configuration with a few tasks defined.
 These tasks will be picked up automatically and available instantly.
-You can run them by typing "nt [task-name]" from anywhere within your project
+You can run them by typing "nt [task-name]" from anywhere within your project.
+To see what tasks are registered use "nt list".
 
 ### Aliases
 
@@ -100,7 +101,6 @@ a text file with a path to the desired ntrc folder.
 * nt: interactive prompt
 * nt [task]: run a task directly
 * nt list: lists tasks and file templates
-* nt make [file]: create a file from a template in a current directory
 * nt status: shows the status information
 
 
@@ -109,6 +109,12 @@ a text file with a path to the desired ntrc folder.
 npm-toolkit will set the environment variables for you based on env key of your ntrc/settings.json file.
 You can use --env switch to quickly change environment configuration, for example typing "nt --env=qa" will load all variables defined in "env.qa" key.
 
+
+### Switches
+
+--env switch toggles environment definitions on.
+--verbose switch will produce detailed log messages about npm-toolkit
+--config switch can be used to point to your application regardless of your current location
 
 ### Logging issues and feature requests
 
