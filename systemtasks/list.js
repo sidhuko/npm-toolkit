@@ -1,11 +1,11 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
 // var Helpers = require('../lib/helpers');
-var loadTasks = require('../lib/loadTasks');
+var loadTasksFromDir = require('../lib/loadTasksFromDir');
 var config = require('../config');
 
 module.exports = function () {
-  var availableTasks = loadTasks(config.resolved.ntrc);
+  var availableTasks = loadTasksFromDir(config.resolved.ntrc);
 
   // Helpers.printHeader();
 

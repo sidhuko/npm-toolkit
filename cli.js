@@ -1,4 +1,5 @@
 #!/usr/bin/env node
 var taskDispatcher = require('./lib/dispatcher');
-
-taskDispatcher();
+var parseCliArgs = require('./lib/parseCliArgs');
+var args = parseCliArgs();
+taskDispatcher(args);

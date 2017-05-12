@@ -5,7 +5,7 @@ var chalk = require('chalk');
 var readJson = require('./lib/readJson');
 var parseCliArgs = require('./lib/parseCliArgs');
 var Helpers = require('./lib/helpers');
-var args = parseCliArgs();
+var args, verbose;
 
 var _cfg = {
   // constants - binding the fixed values and defaults
@@ -17,14 +17,12 @@ var _cfg = {
     localSettingsFilename: 'settings.local.json'
   },
 
-  opts: args.opts,
+  opts: null,
 
   // final paths to ntrc, root, settingsDirname
   resolved: {},
   initialised: false
 };
-
-var verbose = _cfg.opts.verbose;
 
 
 
@@ -165,8 +163,11 @@ var locateNTRC = function (dir) {
   // NOT FOUND
   function _handleCaseNotFound (dir) {
     if (verbose) console.log('[nt] ' + _cfg.const.settingsDirname + ' NOT found in ' + dir);
+    console.log(dir);
+    console.log(args);
     if (dir === '/') {
-      if (args.args[0] && (args.args[0] === 'init' || args.args[0] === 'status')) {
+
+      if (args && args.cmd && args.cmd[0] && (args.cmd[0] === 'init' || args.cmd[0] === 'status')) {
         return false;
       }
       console.log('Couldn\'t find ' + _cfg.const.settingsDirname + ' directory. Check if you\'re in the right location.');
@@ -209,16 +210,19 @@ var locateRoot = function (ntrc) {
  * Initialises config, starting in directory passed in
  * Kicks off locateNTRC to find a valid NTRC path to use
  *
- * @param {string} dir - Directory to start lookup in
+ * @param {string} args - args object
  * @return {bool} Indicates whether a valid NTRC folder has been located
  */
-var initialise = function (dir) {
+var initialise = function (args) {
   if (_cfg.initialised) {
     return true;
   }
-
+  args = args || parseCliArgs();
+  _cfg.opts = args.opts;
+  verbose = args.opts.verbose;
   if (verbose) Helpers.printLine();
 
+  var dir;
   if (_cfg.opts.config) {
     console.log('[nt] Config argument provided, jumping to', _cfg.opts.config);
     dir = _cfg.opts.config;
@@ -245,9 +249,10 @@ var initialise = function (dir) {
   return !!_cfg.resolved.ntrc;
 };
 
-initialise();
+// initialise();
 
 module.exports = _cfg;
-module.exports.initialise = function () {
-  console.trace('Don\'t use config.initialise explicitly, the config will initialise itself');
-};
+// module.exports.initialise = function () {
+//   console.trace('Don\'t use config.initialise explicitly, the config will initialise itself');
+// };
+module.exports.initialise = initialise;
