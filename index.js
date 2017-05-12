@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 if (require.main === module) {
-  return require('./cli');
+  require('./cli');
+} else {
+  module.exports = require('./lib/dispatcher');
 }
-
-module.exports = require('./lib/dispatcher');

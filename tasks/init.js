@@ -59,10 +59,9 @@ module.exports = function (opts) {
         console.log(err);
         return;
       }
-
       return methods.installNt();
-    })
+    });
   }
 
   console.log('Use "nt help" for usage info.');
-}
+};
