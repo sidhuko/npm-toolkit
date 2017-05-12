@@ -7,7 +7,9 @@
     "nt": "cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "test-coveralls": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -26,5 +28,11 @@
     "glob": "^5.0.10",
     "inquirer": "^0.5.1",
     "lodash": "^3.9.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.3.0"
   }
 }
