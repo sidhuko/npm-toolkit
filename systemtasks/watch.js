@@ -1,9 +1,10 @@
 var _ = require('lodash');
 var fs = require('fs');
 var chalk  = require('chalk');
-var Helpers = require('../lib/helpers');
 var loadTasks = require('../lib/loadTasks');
 var config = require('../../config');
+
+// TODO: consider syntax: nt watch "*.scss *.html *.js" "npm run compile"
 
 module.exports = function (opts) {
   var inputCommands = opts._;
@@ -26,8 +27,6 @@ module.exports = function (opts) {
     result = chalk.bold('Task "' + immediateTask + '" not found.');
     result += '\nType "nt list" for the list of available tasks.';
   }
-
-  Helpers.printHeader();
 
   if (result) console.log(result);
   if (fn && typeof fn === 'function') fn(opts);

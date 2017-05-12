@@ -1,8 +1,6 @@
 var chalk  = require('chalk');
-var Helpers = require('../lib/helpers');
 
 module.exports = function () {
-  // Helpers.printHeader();
 
   console.log(chalk.bold('npm-toolkit - flexible script launcher / task runner.'));
   console.log('TL;DR: Allows you to create custom workflows that suit your project.');
@@ -20,9 +18,8 @@ module.exports = function () {
   console.log();
   console.log(chalk.bold('You can also pass the arguments to customise the behaviour:'));
   console.log(' * --verbose      (-v)  for a more detailed output');
-  console.log(' * --env=[name]   (-e)  for an alternative environmetal variables file to be loaded');
-  console.log(' * --ntrc=[dir]   (-c)  for a custom ntrc location');
+  console.log(' * --env=[name]   (-e)  for predefined environmetal variables to be loaded from file');
+  console.log(' * --cwd=[dir]    (-c)  to change working directory');
   console.log();
 
-  // Helpers.printLine();
 };

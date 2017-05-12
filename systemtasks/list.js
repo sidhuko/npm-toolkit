@@ -1,13 +1,10 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
-// var Helpers = require('../lib/helpers');
 var loadTasksFromDir = require('../lib/loadTasksFromDir');
 var config = require('../config');
 
 module.exports = function () {
   var availableTasks = loadTasksFromDir(config.resolved.ntrc);
-
-  // Helpers.printHeader();
 
   if (!availableTasks.length) {
     console.log(chalk.bold('No tasks found.'));
@@ -23,5 +20,4 @@ module.exports = function () {
     console.log();
   }
 
-  // Helpers.printLine();
 };

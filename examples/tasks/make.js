@@ -1,7 +1,5 @@
-// var ntExt = require('npm-toolkit/lib/ext');
-//
-// var _ = ntExt.lodash;
-// var chalk  = ntExt.chalk;
+// var _ = require('lodash');
+// var chalk  = require('chalk');
 // var fs = require('fs');
 // var Helpers = require('npm-toolkit/lib/helpers');
 // var config = require('npm-toolkit/config');

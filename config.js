@@ -4,7 +4,6 @@ var _ = require('lodash');
 var chalk = require('chalk');
 var readJson = require('./lib/readJson');
 var parseCliArgs = require('./lib/parseCliArgs');
-var Helpers = require('./lib/helpers');
 var args, verbose;
 
 var _cfg = {
@@ -208,12 +207,11 @@ var initialise = function (args) {
   }
   args = args || parseCliArgs();
   _cfg.opts = args.opts;
-  verbose = args.opts.verbose;
 
   var dir;
-  if (_cfg.opts.config) {
-    console.log('[nt] Config argument provided, jumping to', _cfg.opts.config);
-    dir = _cfg.opts.config;
+  if (_.get(args, 'opts.cwd')) {
+    console.log('[nt] Config argument provided, jumping to', args.opts.cwd);
+    dir = args.opts.cwd;
   }
 
   var ntrcLocationObject = resolveConfigPath(dir);
@@ -228,8 +226,8 @@ var initialise = function (args) {
 
     _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
 
-    if (verbose) console.log('[nt] Environment:', _cfg.opts.env || 'not specified');
-    setEnvVars(_cfg.opts.env);
+    // if (verbose) console.log('[nt] Environment:', args.opts.env || 'not specified');
+    setEnvVars(args.opts.env);
   }
 
   _cfg.initialised = !!_cfg.resolved.ntrc;

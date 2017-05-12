@@ -1,6 +1,5 @@
 var chalk  = require('chalk');
 var os = require('os');
-var Helpers = require('../lib/helpers');
 var config = require('../config');
 // console.log('config', config)
 function print (label, value) {
