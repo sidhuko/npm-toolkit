@@ -31,5 +31,4 @@ module.exports = function (opts) {
 
   if (result) console.log(result);
   if (fn && typeof fn === 'function') fn(opts);
-  Helpers.printLine();
 };

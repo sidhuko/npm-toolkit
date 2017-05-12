@@ -3,8 +3,6 @@ var nt = require('..');
 // var os = require('os');
 // var fs = require('fs-extra');
 
-var LOCAL_CACHE_DIR = os.homedir() + '/.ffbinaries-cache';
-
 describe('npm-toolkit dispatcher', function() {
   describe('system tasks', function() {
     // version

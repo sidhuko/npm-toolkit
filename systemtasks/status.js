@@ -2,13 +2,13 @@ var chalk  = require('chalk');
 var os = require('os');
 var Helpers = require('../lib/helpers');
 var config = require('../config');
-
+// console.log('config', config)
 function print (label, value) {
   console.log(chalk.bold(label + ' ') + value);
 }
 
 module.exports = function () {
-  Helpers.printHeader();
+  console.log(chalk.bold('------------- npm-toolkit -------------'));
 
   print('Current location:           ', process.cwd());
   print('Project root:               ', config.resolved.ntrc ? config.resolved.root : 'ntrc not found');

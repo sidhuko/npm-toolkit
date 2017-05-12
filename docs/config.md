@@ -25,8 +25,6 @@ Example config object:
 {
   "const": {
     "version": "0.2.2",
-    "settingsDirname": "ntrc",
-    "settingsDirnameAlias": "ntrc-alias",
     "projectSettingsFilename": "settings.json",
     "localSettingsFilename": "settings.local.json"
   },

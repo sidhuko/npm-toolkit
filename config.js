@@ -11,15 +11,12 @@ var _cfg = {
   // constants - binding the fixed values and defaults
   const: {
     version: require('./package.json').version,
-    settingsDirname: 'ntrc',
-    settingsDirnameAlias: 'ntrc-alias',
     projectSettingsFilename: 'settings.json',
     localSettingsFilename: 'settings.local.json'
   },
 
   opts: null,
 
-  // final paths to ntrc, root, settingsDirname
   resolved: {},
   initialised: false
 };
@@ -40,7 +37,7 @@ var resolveConfigPath = function (location) {
   }
 
   return {
-    settingsDirname: _cfg.const.settingsDirname,
+    settingsDirname: 'ntrc',
     root: path.resolve(location)
   };
 };
@@ -136,23 +133,23 @@ var setEnvVars = function (env) {
  */
 var locateNTRC = function (dir) {
   var _dirContainsNtrc = function (dir) {
-    return fs.existsSync(dir + '/' + _cfg.const.settingsDirname);
+    return fs.existsSync(dir + '/ntrc');
   };
 
   var _dirContainsNtrcAlias = function (dir) {
-    return fs.existsSync(dir + '/' + _cfg.const.settingsDirnameAlias);
+    return fs.existsSync(dir + '/ntrc-alias');
   };
 
   // FOUND
   function _handleCaseNtrcFound (dir) {
-    if (verbose) console.log('[nt] ' + _cfg.const.settingsDirname + ' found in ' + dir);
+    if (verbose) console.log('[nt] ntrc found in ' + dir);
 
-    return dir + '/' + _cfg.const.settingsDirname;
+    return dir + '/ntrc';
   }
 
   // ALIAS FOUND
   function _handleCaseNtrcAliasFound (dir) {
-    var aliasContent = fs.readFileSync(path.join(dir, _cfg.const.settingsDirnameAlias)).toString().trim();
+    var aliasContent = fs.readFileSync(dir + '/ntrc-alias').toString().trim();
     var aliasDest = path.resolve(dir, aliasContent);
 
     if (verbose) console.log('[nt] Alias found in ' + dir + '. Jumping to ' + aliasDest);
@@ -162,17 +159,9 @@ var locateNTRC = function (dir) {
 
   // NOT FOUND
   function _handleCaseNotFound (dir) {
-    if (verbose) console.log('[nt] ' + _cfg.const.settingsDirname + ' NOT found in ' + dir);
-    console.log(dir);
-    console.log(args);
+    if (verbose) console.log('[nt] ntrc NOT found in ' + dir);
     if (dir === '/') {
-
-      if (args && args.cmd && args.cmd[0] && (args.cmd[0] === 'init' || args.cmd[0] === 'status')) {
-        return false;
-      }
-      console.log('Couldn\'t find ' + _cfg.const.settingsDirname + ' directory. Check if you\'re in the right location.');
-      console.log('You can also initialise a new project here by typing "nt init"');
-      return process.exit(0);
+      return false;
     }
 
     return locateNTRC(path.join(dir + '/..'));
@@ -220,7 +209,6 @@ var initialise = function (args) {
   args = args || parseCliArgs();
   _cfg.opts = args.opts;
   verbose = args.opts.verbose;
-  if (verbose) Helpers.printLine();
 
   var dir;
   if (_cfg.opts.config) {

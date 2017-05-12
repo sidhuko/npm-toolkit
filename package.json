@@ -1,6 +1,6 @@
 {
   "name": "npm-toolkit",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Highly customisable script launcher. Flexible by design.",
   "main": ".",
   "bin": {

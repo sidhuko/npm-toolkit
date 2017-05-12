@@ -14,7 +14,6 @@ module.exports = function () {
   // console.log();
   console.log(chalk.bold('System tasks:'));
   console.log(' * nt help              This screen');
-  console.log(' * nt init              Initialises nt project in current location');
   console.log(' * nt list (ls)         List project tasks');
   console.log(' * nt status            Environment information');
   console.log(' * nt version           Returns version number');
@@ -22,7 +21,7 @@ module.exports = function () {
   console.log(chalk.bold('You can also pass the arguments to customise the behaviour:'));
   console.log(' * --verbose      (-v)  for a more detailed output');
   console.log(' * --env=[name]   (-e)  for an alternative environmetal variables file to be loaded');
-  console.log(' * --config=[dir] (-c)  for a custom config directory (ntrc)');
+  console.log(' * --ntrc=[dir]   (-c)  for a custom ntrc location');
   console.log();
 
   // Helpers.printLine();
