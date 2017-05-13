@@ -32,7 +32,7 @@ describe('npm-toolkit dispatcher', function() {
     it('should execute "" and return a no-task-specified error', function() {
       var args = generateBasicArgs();
       args.onDataFn = function (str) {
-        var expected = 'No task specified. See "nt help".';
+        var expected = 'No task specified. See "nt help" for usage info or "nt list" for a list of available tasks.';
         if (str !== expected) {
           throwFailure(expected, str);
         }
