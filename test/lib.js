@@ -14,7 +14,7 @@ function generateBasicArgs () {
       console.log('!!', str || '');
       throwFailure(null, str);
     }
-  }
+  };
   return args;
 }
 
@@ -34,9 +34,9 @@ describe('npm-toolkit dispatcher', function() {
       args.onDataFn = function (str) {
         var expected = 'No task specified. See "nt help".';
         if (str !== expected) {
-          throwFailure(expected, str)
+          throwFailure(expected, str);
         }
-      }
+      };
 
       var task = dispatcher(args);
     });
@@ -65,8 +65,8 @@ describe('npm-toolkit dispatcher', function() {
 
       args.onDataFn = function (str) {
         throwFailure(null, str);
-      }
-      args.onErrFn = function () {}
+      };
+      args.onErrFn = function () {};
 
       var task = dispatcher(args);
     });
@@ -77,8 +77,8 @@ describe('npm-toolkit dispatcher', function() {
 
       args.onDataFn = function (str) {
         throwFailure(null, str);
-      }
-      args.onErrFn = function () {}
+      };
+      args.onErrFn = function () {};
 
       var task = dispatcher(args);
     });

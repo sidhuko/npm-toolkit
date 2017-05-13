@@ -18,6 +18,12 @@ Create workflows as custom as you need them to be.
 
 ## Change log
 
+v0.3.0
+* Unit tests
+* Big cleanup
+* Removed interactive menu
+
+
 v0.2.2
 
 * Replaced several libraries / general cleanup
