@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var dispatcher = require('../lib/dispatcher');
-// var os = require('os');
-// var fs = require('fs-extra');
+var readJson = require('../lib/readJson');
+var loadTasksFromDir = require('../lib/loadTasksFromDir');
 
 function generateBasicArgs () {
   var args = {
@@ -82,6 +82,49 @@ describe('npm-toolkit dispatcher', function() {
 
       var task = dispatcher(args);
     });
+
+    it('should switch cwd correctly', function() {
+      var args = generateBasicArgs();
+      args.cmd = 'db';
+      args.opts.cwd = __dirname + '/../examples';
+
+      var task = dispatcher(args);
+    });
   });
 
+});
+
+
+describe('npm-toolkit readJson', function() {
+  it('should read JSON correctly', function() {
+    var list = readJson(__dirname + '/../examples/ntrc/settings.json', function (err, data) {
+      expect(err).to.be.falsy;
+      expect(data).to.not.be.empty;
+    });
+  });
+
+  it('should throw error when JSON is invalid or file does not exits', function() {
+    var list = readJson(__dirname + '/../examples/ntrc/settings-asdf-asdf.json', function (err, data) {
+      expect(err).to.not.be.empty;
+      expect(data).to.be.falsy;
+    });
+
+  });
+});
+
+describe('npm-toolkit loadTasksFromDir', function() {
+  it('should pick up tasks in examples folder', function() {
+    var list = loadTasksFromDir(__dirname + '/../examples/ntrc');
+    expect(list).to.not.be.empty;
+  });
+
+  it('should return a function loading a task successfully', function() {
+    var task = loadTasksFromDir(__dirname + '/../examples/ntrc', 'db');
+    expect(typeof task).to.equal('function');
+  });
+
+  it('should return with no value for missing task', function() {
+    var task = loadTasksFromDir(__dirname + '/../examples/ntrc', 'db-asdf');
+    expect(typeof task).to.equal('undefined');
+  });
 });
