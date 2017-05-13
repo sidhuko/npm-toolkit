@@ -23,7 +23,7 @@
   "homepage": "https://github.com/vot/npm-toolkit",
   "dependencies": {
     "chalk": "^1.0.0",
-    "clarg": "0.0.2",
+    "clarg": "0.0.4",
     "fs-extra": "^0.21.0",
     "glob": "^5.0.10",
     "lodash": "^3.9.3"
