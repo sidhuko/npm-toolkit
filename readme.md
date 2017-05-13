@@ -2,10 +2,16 @@
 
 [![NPM Version][npm-img]][npm-url]
 [![NPM Downloads][npm-dl-img]][npm-url]
+[![Travis build][travis-img]][travis-url]
+[![Coveralls coverage][coveralls-img]][coveralls-url]
 
 [npm-url]: https://npmjs.org/package/npm-toolkit
 [npm-img]: https://img.shields.io/npm/v/npm-toolkit.svg
 [npm-dl-img]: https://img.shields.io/npm/dm/npm-toolkit.svg
+[travis-img]: https://img.shields.io/travis/vot/npm-toolkit.svg
+[travis-url]: https://travis-ci.org/vot/npm-toolkit
+[coveralls-img]: https://img.shields.io/coveralls/vot/npm-toolkit.svg
+[coveralls-url]: https://coveralls.io/github/vot/npm-toolkit
 
 
 Flexible script launcher. Like Grunt or Gulp but without imposing a lot of structure.
@@ -17,6 +23,11 @@ Create workflows as custom as you need them to be.
 
 
 ## Change log
+
+v0.2.3
+* Unit tests
+* Big cleanup - removed a lot of bloat and improved reliability
+
 
 v0.2.2
 
@@ -81,25 +92,7 @@ You can also check out development version directly from GitHub, instructions ne
 
 ### Quick start
 At the top-level of your own app create a folder named ntrc.
-You can do this using the following command.
-
-```
-nt init
-```
-
-Init command will create a sample configuration with a few tasks defined.
-These tasks will be picked up automatically and available instantly.
-You can run them by typing "nt [task-name]" from anywhere within your project.
-To see what tasks are registered use "nt list".
-
-### Aliases
-
-You can use a ntrc directory outside your working dir with --config=/path-to-my-project/ntrc switch.
-This can be useful for registering custom aliases in a multi-project configurations.
-
-You can also create a ntrc-alias file anywhere which should be
-a text file with a path to the desired ntrc folder.
-
+See "examples" to see what ntrc folder should look like (it should include settings.json)
 
 ### Commands
 

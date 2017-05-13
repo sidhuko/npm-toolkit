@@ -24,15 +24,9 @@ Example config object:
 ```
 {
   "const": {
-    "version": "0.2.2",
-    "settingsDirname": "ntrc",
-    "settingsDirnameAlias": "ntrc-alias",
+    "version": "0.2.3",
     "projectSettingsFilename": "settings.json",
     "localSettingsFilename": "settings.local.json"
-  },
-  "opts": {
-    "verbose": true,
-    "env": "dev"
   },
   "resolved": {
     "ntrc": "/Users/username/yourapp/ntrc",

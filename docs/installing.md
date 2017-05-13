@@ -1,5 +1,6 @@
-# Node.js & npm
-nodejs.org
+# npm
+
+`npm i nt -g`
 
 ### Manual installation (development version)
 
