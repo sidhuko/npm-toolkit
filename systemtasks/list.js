@@ -3,21 +3,21 @@ var chalk  = require('chalk');
 var loadTasksFromDir = require('../lib/loadTasksFromDir');
 var config = require('../config');
 
-module.exports = function () {
+module.exports = function (opts, cmd, print) {
   var availableTasks = loadTasksFromDir(config.resolved.ntrc);
 
   if (!availableTasks.length) {
-    console.log(chalk.bold('No tasks found.'));
-    console.log();
-    console.log('You don\'t seem to be in the right directory - type nt status for details.');
-    console.log('You can also initialise nt in current directory with nt init.');
-    console.log();
+    print.data(chalk.bold('No tasks found.'));
+    print.data();
+    print.data('You don\'t seem to be in the right directory - type nt status for details.');
+    print.data('You can also initialise nt in current directory with nt init.');
+    print.data();
   } else {
-    console.log(chalk.bold('Available tasks:')),
-    console.log(availableTasks.join(', '));
-    console.log();
-    console.log(chalk.grey(chalk.bold('Task usage:') + ' nt [task]     ' + chalk.bold('Task help:') + ' nt help [task].'));
-    console.log();
+    print.data(chalk.bold('Available tasks:')),
+    print.data(availableTasks.join(', '));
+    print.data();
+    print.data(chalk.grey(chalk.bold('Task usage:') + ' nt [task]     ' + chalk.bold('Task help:') + ' nt help [task].'));
+    print.data();
   }
 
 };

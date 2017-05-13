@@ -1,6 +1,6 @@
 var readJson = require('../lib/readJson');
 
-module.exports = function () {
+module.exports = function (opts, cmd, print) {
   var packageJson = readJson(__dirname + '/../package.json');
-  console.log('npm-toolkit ' + (packageJson.version || '- unknown version'));
+  print.data('npm-toolkit ' + (packageJson.version || '- unknown version'));
 };

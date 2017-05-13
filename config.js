@@ -4,7 +4,7 @@ var _ = require('lodash');
 var chalk = require('chalk');
 var readJson = require('./lib/readJson');
 var parseCliArgs = require('./lib/parseCliArgs');
-var args, verbose;
+var args, verbose, print;
 
 var _cfg = {
   // constants - binding the fixed values and defaults
@@ -47,23 +47,19 @@ var resolveConfigPath = function (location) {
  * Parses settings.json and settings.local.json in a given location
  */
 var parseSettingsJson = function (dir) {
-  if (verbose) console.log('[nt] Trying to parse settings in ' + dir);
   var projectSettingsPath = dir + '/' + _cfg.const.projectSettingsFilename;
   var localSettingsPath = dir + '/' + _cfg.const.localSettingsFilename;
 
   var settings = {};
 
   if (fs.existsSync(projectSettingsPath)) {
-    if (verbose) console.log('[nt] ' + projectSettingsPath + ' exists');
     settings = readJson(projectSettingsPath);
   }
 
   if (fs.existsSync(localSettingsPath)) {
-    if (verbose) console.log('[nt] ' + localSettingsPath + ' exists');
     settings.local = readJson(localSettingsPath);
   }
 
-  // console.log(settings);
   return settings;
 };
 
@@ -113,9 +109,9 @@ var setEnvVars = function (env) {
 
   Object.keys(envVars).forEach(function (key) {
     if (process.env[key]) {
-      if (verbose) console.log(chalk.grey('[nt] Overwriting environment variable', key + ':', process.env[key], '->', envVars[key]));
+      if (verbose) print.data(chalk.grey('[debug] Overwriting environment variable', key + ':', process.env[key], '->', envVars[key]));
     } else {
-      if (verbose) console.log(chalk.grey('[nt] Setting environment variable', key + ':', envVars[key]));
+      if (verbose) print.data(chalk.grey('[debug] Setting environment variable', key + ':', envVars[key]));
     }
     process.env[key] = envVars[key];
   });
@@ -141,7 +137,7 @@ var locateNTRC = function (dir) {
 
   // FOUND
   function _handleCaseNtrcFound (dir) {
-    if (verbose) console.log('[nt] ntrc found in ' + dir);
+    if (verbose) print.data('[debug] ntrc found in ' + dir);
 
     return dir + '/ntrc';
   }
@@ -151,14 +147,14 @@ var locateNTRC = function (dir) {
     var aliasContent = fs.readFileSync(dir + '/ntrc-alias').toString().trim();
     var aliasDest = path.resolve(dir, aliasContent);
 
-    if (verbose) console.log('[nt] Alias found in ' + dir + '. Jumping to ' + aliasDest);
+    if (verbose) print.data('[debug] Alias found in ' + dir + '. Jumping to ' + aliasDest);
 
     return aliasDest;
   }
 
   // NOT FOUND
   function _handleCaseNotFound (dir) {
-    if (verbose) console.log('[nt] ntrc NOT found in ' + dir);
+    if (verbose) print.data('[debug] ntrc NOT found in ' + dir);
     if (dir === '/') {
       return false;
     }
@@ -188,7 +184,7 @@ var locateNTRC = function (dir) {
  */
 var locateRoot = function (ntrc) {
   var resolved = path.join(_cfg.resolved.ntrc, (_cfg.settings.root || '..'));
-  if (verbose) console.log('[nt] Project root set at', resolved);
+  if (verbose) print.data('[debug] Project root set at', resolved);
   return resolved;
 };
 
@@ -206,11 +202,18 @@ var initialise = function (args) {
     return true;
   }
   args = args || parseCliArgs();
+  verbose = args.opts.verbose || false;
   _cfg.opts = args.opts;
+
+  // Bind print options
+  print = {
+    data: _.get(args, 'print.data', console.log),
+    err: _.get(args, 'print.err', console.error),
+  };
 
   var dir;
   if (_.get(args, 'opts.cwd')) {
-    console.log('[nt] Config argument provided, jumping to', args.opts.cwd);
+    print.data('cwd argument provided, switching to:', args.opts.cwd);
     dir = args.opts.cwd;
   }
 
@@ -220,25 +223,17 @@ var initialise = function (args) {
   if (_cfg.resolved.ntrc) {
     _cfg.resolved.settingsDirname = resolveConfigPath(_cfg.resolved.ntrc).settingsDirname;
 
-    // if (verbose) console.log('[nt] _cfg.resolved.ntrc', _cfg.resolved.ntrc);
-
     _cfg.settings = parseSettingsJson(_cfg.resolved.ntrc);
 
     _cfg.resolved.root = locateRoot(_cfg.resolved.ntrc);
 
-    // if (verbose) console.log('[nt] Environment:', args.opts.env || 'not specified');
+    if (verbose) print.data('[debug] Environment:', args.opts.env || 'not specified');
     setEnvVars(args.opts.env);
   }
 
   _cfg.initialised = !!_cfg.resolved.ntrc;
-  // console.log('------------------\n' + chalk.green('_cfg object') + ':\n', _cfg, '\n------------------\n');
   return !!_cfg.resolved.ntrc;
 };
 
-// initialise();
-
 module.exports = _cfg;
-// module.exports.initialise = function () {
-//   console.trace('Don\'t use config.initialise explicitly, the config will initialise itself');
-// };
 module.exports.initialise = initialise;

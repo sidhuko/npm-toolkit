@@ -1,24 +1,27 @@
 var chalk  = require('chalk');
 var os = require('os');
 var config = require('../config');
-// console.log('config', config)
-function print (label, value) {
-  console.log(chalk.bold(label + ' ') + value);
+var _ = require('lodash');
+
+function genLine (label, value) {
+  var l = _.padRight(label, 30);
+  return chalk.bold(l) + value;
 }
 
-module.exports = function () {
-  console.log(chalk.bold('------------- npm-toolkit -------------'));
-
-  print('Current location:           ', process.cwd());
-  print('Project root:               ', config.resolved.ntrc ? config.resolved.root : 'ntrc not found');
-  print('Project settings:           ', config.resolved.ntrc ? config.resolved.ntrc : 'ntrc not found');
-  print('Hostname:                   ', os.hostname());
+module.exports = function (opts, cmd, print) {
+  print.data(chalk.bold(_.pad(' npm-toolkit ', 60, '-')));
   var osString = [os.type(), os.release(), os.arch()].join(', ');
-  print('Operating system:           ', osString);
-  print('Node version:               ', process.version);
-  print('npm-toolkit version:        ', 'v' + config.const.version);
-  if (config && config.settings && config.settings.env) {
-    print('Defined env var sets:       ', Object.keys(config.settings.env).join(','));
+  var envDefinitions = _.get(config, 'settings.env');
+
+  print.data(genLine('Current location', process.cwd()));
+  print.data(genLine('Project root', config.resolved.ntrc ? config.resolved.root : 'ntrc not found'));
+  print.data(genLine('Project settings', config.resolved.ntrc ? config.resolved.ntrc : 'ntrc not found'));
+  print.data(genLine('Hostname', os.hostname()));
+  print.data(genLine('Operating system', osString));
+  print.data(genLine('Node version', process.version));
+  print.data(genLine('npm-toolkit version', 'v' + config.const.version));
+  if (envDefinitions) {
+    print.data(genLine('Defined env var sets', Object.keys(envDefinitions).join(',')));
   }
-  console.log();
+
 };
