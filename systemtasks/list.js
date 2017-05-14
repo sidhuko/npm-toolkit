@@ -1,23 +1,23 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
-var loadTasksFromDir = require('../lib/loadTasksFromDir');
+var getScriptsFromPackageJson = require('../lib/getScriptsFromPackageJson');
 var config = require('../config');
 
-module.exports = function (opts, cmd, print) {
-  var availableTasks = loadTasksFromDir(config.resolved.ntrc);
+module.exports = function (args) {
+  if (!config.packageJson) {
+    return args.print.err('Unable to list tasks - cannot find package.json.');
+  }
+
+  var availableTasks = getScriptsFromPackageJson(config.packageJson);
 
   if (!availableTasks.length) {
-    print.data(chalk.bold('No tasks found.'));
-    print.data();
-    print.data('You don\'t seem to be in the right directory - type nt status for details.');
-    print.data('You can also initialise nt in current directory with nt init.');
-    print.data();
-  } else {
-    print.data(chalk.bold('Available tasks:')),
-    print.data(availableTasks.join(', '));
-    print.data();
-    print.data(chalk.grey(chalk.bold('Task usage:') + ' nt [task]     ' + chalk.bold('Task help:') + ' nt help [task].'));
-    print.data();
+    return args.print.err('There are no scripts defined in package.json.');
   }
+
+  args.print.data(chalk.bold('Available tasks:')),
+  args.print.data(availableTasks.join(', '));
+  args.print.data();
+  args.print.data(chalk.grey(chalk.bold('Task usage:') + ' nt [task]  or  npm run [task]'));
+  args.print.data();
 
 };

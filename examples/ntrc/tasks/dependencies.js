@@ -3,8 +3,8 @@ var readJson = require('npm-toolkit/lib/readJson');
 config.initialise();
 
 module.exports = function () {
-  if (config.resolved.root) {
-    var packageJson = readJson(config.resolved.root + '/package.json');
+  if (config.packageJson) {
+    var packageJson = readJson(config.packageJson);
     if (packageJson) {
       console.log('Dependencies', packageJson.dependencies);
       console.log('Dev Dependencies', packageJson.devDependencies);

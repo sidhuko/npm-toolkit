@@ -8,20 +8,19 @@ function genLine (label, value) {
   return chalk.bold(l) + value;
 }
 
-module.exports = function (opts, cmd, print) {
-  print.data(chalk.bold(_.pad(' npm-toolkit ', 60, '-')));
+module.exports = function (args) {
+  args.print.data(chalk.bold(_.pad(' npm-toolkit ', 60, '-')));
   var osString = [os.type(), os.release(), os.arch()].join(', ');
   var envDefinitions = _.get(config, 'settings.env');
 
-  print.data(genLine('Current location', process.cwd()));
-  print.data(genLine('Project root', config.resolved.ntrc ? config.resolved.root : 'ntrc not found'));
-  print.data(genLine('Project settings', config.resolved.ntrc ? config.resolved.ntrc : 'ntrc not found'));
-  print.data(genLine('Hostname', os.hostname()));
-  print.data(genLine('Operating system', osString));
-  print.data(genLine('Node version', process.version));
-  print.data(genLine('npm-toolkit version', 'v' + config.const.version));
+  args.print.data(genLine('Current location', process.cwd()));
+  args.print.data(genLine('Project root', config.projectRoot ? config.projectRoot : 'not found'));
+  args.print.data(genLine('Hostname', os.hostname()));
+  args.print.data(genLine('Operating system', osString));
+  args.print.data(genLine('Node version', process.version));
+  args.print.data(genLine('npm-toolkit version', 'v' + config.ntVersion));
   if (envDefinitions) {
-    print.data(genLine('Defined env var sets', Object.keys(envDefinitions).join(',')));
+    args.print.data(genLine('Defined env var sets', Object.keys(envDefinitions).join(',')));
   }
 
 };

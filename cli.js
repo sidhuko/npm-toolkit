@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var taskDispatcher = require('./lib/dispatcher');
+var launcher = require('./lib/launcher');
 var parseCliArgs = require('./lib/parseCliArgs');
 var chalk = require('chalk');
 var args = parseCliArgs();
@@ -11,4 +11,4 @@ args.onErrFn = function onErrFn(str) {
   process.exit(1);
 };
 
-taskDispatcher(args);
+launcher(args);
