@@ -23,8 +23,8 @@ You can also execute them programmatically with `nt.execNpmScript(taskname)`.
 To list available tasks you can run `nt list`.
 
 The CLI utility picks up tasks from project's package.json
-and enhances the default behaviour of "npm run".
-
+and works like "npm run" but uses a shorter "nt" command and it passes flags
+down to the script when the `--inherit (-i)` flag is added.
 
 
 ## Installing

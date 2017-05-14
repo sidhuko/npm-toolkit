@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
 var getScriptsFromPackageJson = require('../../lib/getScriptsFromPackageJson');
+var getProjectEnvVarsDefList = require('../../lib/getProjectEnvVarsDefList');
 var config = require('../config');
 
 module.exports = function (args) {
@@ -9,6 +10,7 @@ module.exports = function (args) {
   }
 
   var availableTasks = Object.keys(getScriptsFromPackageJson(config.packageJson), args);
+  var availableEnvs = getProjectEnvVarsDefList(config.packageJson);
 
   if (!availableTasks.length) {
     return args.print.err('There are no scripts defined in package.json.');
@@ -17,7 +19,22 @@ module.exports = function (args) {
   args.print.data(chalk.bold('Available tasks:')),
   args.print.data(availableTasks.join(', '));
   args.print.data();
-  args.print.data(chalk.grey(chalk.bold('Task usage:') + ' nt [task]  or  npm run [task]'));
+
+  if (availableEnvs.length) {
+    args.print.data(chalk.bold('Available env files:')),
+    args.print.data(availableEnvs.join(', '));
+    args.print.data();
+  }
+
+  var usageLine = [];
+
+  usageLine.push(chalk.bold('Task usage:  '));
+  usageLine.push(chalk.bold('nt [task]' + (availableEnvs.length ? ' -e [env]' : '')));
+  usageLine.push('  or  ');
+  usageLine.push(chalk.bold('npm run [task]'));
+
+
+  args.print.data(usageLine.join(''));
   args.print.data();
 
 };

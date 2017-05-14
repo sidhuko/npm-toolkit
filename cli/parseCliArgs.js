@@ -17,12 +17,13 @@ function parser (args) {
     opts: {
       verbose: cliArgs.opts.verbose || cliArgs.opts.v || false,
       env: cliArgs.opts.env || cliArgs.opts.e || false,
-      cwd: cliArgs.opts.cwd || cliArgs.opts.c || false
+      cwd: cliArgs.opts.cwd || cliArgs.opts.c || false,
+      inherit: cliArgs.opts.inherit || cliArgs.opts.i || false
     }
   };
 
   _.map(cliArgs.opts, function (v, k) {
-    if (['verbose', 'env', 'cwd', 'v', 'c', 'e'].indexOf(k) === -1) {
+    if (['verbose', 'env', 'cwd', 'inherit', 'v', 'c', 'e', 'i'].indexOf(k) === -1) {
       parsed.opts[k] = v;
     }
 
