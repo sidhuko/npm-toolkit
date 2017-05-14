@@ -45,7 +45,7 @@ with `npm install npm-toolkit -g`. You can then use `nt` command in any package.
 * `getSystemInfo`
 * `readJson`
 * `parseCLI`
-* `getProjectEnvVarsList`
+* `getProjectEnvVarsDefList`
 * `getProjectEnvVars`
 * `applyProjectEnvFile`
 * `exec`
