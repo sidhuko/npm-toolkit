@@ -1,7 +1,7 @@
 var chalk  = require('chalk');
 var _ = require('lodash');
 
-var getSystemInfo = require('../lib/getSystemInfo');
+var getSystemInfo = require('../../lib/getSystemInfo');
 
 function genLine (label, value) {
   var l = _.padRight(label, 30);

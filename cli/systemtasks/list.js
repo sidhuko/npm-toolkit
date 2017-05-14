@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
-var getScriptsFromPackageJson = require('../lib/getScriptsFromPackageJson');
-var config = require('../cli/config');
+var getScriptsFromPackageJson = require('../../lib/getScriptsFromPackageJson');
+var config = require('../config');
 
 module.exports = function (args) {
   if (!config.packageJson) {

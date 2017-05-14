@@ -34,19 +34,19 @@ function launcher (args) {
   // package.json script naming conflicts (i.e. npm run help = nt _help)
   if (task[0] !== '_') {
     if (task === 'version') {
-      taskFn = require('../systemtasks/version');
+      taskFn = require('./systemtasks/version');
     }
 
     if (task === 'help') {
-      taskFn = require('../systemtasks/help');
+      taskFn = require('./systemtasks/help');
     }
 
     if (task === 'status') {
-      taskFn = require('../systemtasks/status');
+      taskFn = require('./systemtasks/status');
     }
 
     if (task === 'ls' || task === 'list') {
-      taskFn = require('../systemtasks/list');
+      taskFn = require('./systemtasks/list');
     }
   }
 
