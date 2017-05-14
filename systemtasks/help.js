@@ -3,8 +3,7 @@ var chalk  = require('chalk');
 module.exports = function (args) {
 
   args.print.data(chalk.bold('npm-toolkit'));
-  args.print.data('Create custom workflows that work well with your project.');
-  args.print.data('Automatically picks up tasks from "ntrc/tasks" folder.');
+  args.print.data('Simple CLI launcher. Picks up scripts from package.json.');
   args.print.data();
 
   args.print.data(chalk.bold('System tasks:'));

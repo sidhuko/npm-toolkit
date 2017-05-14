@@ -1,8 +1,19 @@
-var _ = require('lodash');
+#!/usr/bin/env node
+// var launcher = require('./launcher');
+var parseCliArgs = require('./parseCliArgs');
 var getScriptsFromPackageJson = require('./getScriptsFromPackageJson');
+var _ = require('lodash');
+var chalk = require('chalk');
 var config = require('../config');
 
-var launcher = function (args) {
+
+
+function executeScript(script, args) {
+  args.print.data('ExecuteScript: ' + args.cmd[0]);
+  args.print.data('> ' + script + '\n');
+}
+
+function launcher (args) {
   var onDataFn = _.get(args, 'onDataFn');
   var onErrFn = _.get(args, 'onErrFn');
 
@@ -22,10 +33,7 @@ var launcher = function (args) {
 
 
   if (!task) {
-    taskFn = function () {
-      args.print.data('No task specified. See "nt help" for usage info or "nt list" for a list of available tasks.');
-      return false;
-    };
+    return args.print.data('No task specified. See "nt help" for usage info or "nt list" for a list of available tasks.');
   }
 
   // allowing _ in front of task name to bypass potential
@@ -55,8 +63,10 @@ var launcher = function (args) {
   // scan for tasks then load appropriate one
   if (packageFound && task && !taskFn) {
     var taskList = getScriptsFromPackageJson(config.packageJson);
-    if (taskList.indexOf(task) !== -1) {
-      taskFn = getScriptsFromPackageJson(config.packageJson, task);
+    if (Object.keys(taskList).indexOf(task) !== -1) {
+      taskFn = function () {
+        return executeScript(taskList[task], args);
+      };
     }
   }
 
@@ -67,4 +77,15 @@ var launcher = function (args) {
   return taskFn(args);
 };
 
-module.exports = launcher;
+
+var args = parseCliArgs();
+
+args.onDataFn = function onDataFn(str) {
+  console.log(str || '');
+};
+args.onErrFn = function onErrFn(str) {
+  console.error(chalk.red.bold('[ERR!]'), str || '');
+  process.exit(1);
+};
+
+launcher(args);

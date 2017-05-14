@@ -2,8 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var chalk = require('chalk');
-var readJson = require('./lib/readJson');
-var parseCliArgs = require('./lib/parseCliArgs');
+var readJson = require('./cli/readJson');
+var parseCliArgs = require('./cli/parseCliArgs');
 var args, verbose, print;
 
 var _cfg = {

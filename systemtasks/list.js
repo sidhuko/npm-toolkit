@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var chalk  = require('chalk');
-var getScriptsFromPackageJson = require('../lib/getScriptsFromPackageJson');
+var getScriptsFromPackageJson = require('../cli/getScriptsFromPackageJson');
 var config = require('../config');
 
 module.exports = function (args) {
@@ -8,7 +8,7 @@ module.exports = function (args) {
     return args.print.err('Unable to list tasks - cannot find package.json.');
   }
 
-  var availableTasks = getScriptsFromPackageJson(config.packageJson);
+  var availableTasks = Object.keys(getScriptsFromPackageJson(config.packageJson));
 
   if (!availableTasks.length) {
     return args.print.err('There are no scripts defined in package.json.');

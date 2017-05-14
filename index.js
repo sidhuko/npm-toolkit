@@ -2,5 +2,5 @@
 if (require.main === module) {
   require('./cli');
 } else {
-  module.exports = require('./lib/launcher');
+  module.exports = require('./lib');
 }

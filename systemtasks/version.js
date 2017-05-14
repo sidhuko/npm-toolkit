@@ -1,4 +1,4 @@
-var readJson = require('../lib/readJson');
+var readJson = require('../cli/readJson');
 
 module.exports = function (args) {
   var packageJson = readJson(__dirname + '/../package.json');

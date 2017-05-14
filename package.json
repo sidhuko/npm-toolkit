@@ -4,7 +4,7 @@
   "description": "Flexible script launcher.",
   "main": ".",
   "bin": {
-    "nt": "cli.js"
+    "nt": "cli/index.js"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
