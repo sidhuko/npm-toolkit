@@ -8,56 +8,73 @@
 [npm-url]: https://npmjs.org/package/npm-toolkit
 [npm-img]: https://img.shields.io/npm/v/npm-toolkit.svg
 [npm-dl-img]: https://img.shields.io/npm/dm/npm-toolkit.svg
-[travis-img]: https://img.shields.io/travis/vot/npm-toolkit.svg
+[travis-img]: https://img.shields.io/travis/vot/npm-toolkit/v1.0.0.svg
 [travis-url]: https://travis-ci.org/vot/npm-toolkit
-[coveralls-img]: https://img.shields.io/coveralls/vot/npm-toolkit.svg
+[coveralls-img]: https://img.shields.io/coveralls/vot/npm-toolkit/v1.0.0.svg
 [coveralls-url]: https://coveralls.io/github/vot/npm-toolkit
 
 
-Task development toolkit. Bundles a collection of utilities.
-The idea is to have scripts that you can run from all potential
-entry points - through CLI or code.
+Everything you need to create your npm run scripts.
+Bundles some of the most commonly used methods needed in build scripts.
 
-The CLI utility can pick up tasks in project's package json
-and enhance the default behaviour of "npm run".
-while the module can assure that the scripts created
-have all their most common tasks available in one place
-and that they can be used in more than one way.
+Scripts can be started with `nt taskname` and `npm run taskname`.
+You can also execute them programmatically with `nt.execNpmScript(taskname)`.
 
+To list available tasks you can run `nt list`.
 
-
-### Installing
-
-```
-npm install npm-toolkit
-```
-
-If you'd like to have the CLI utility available in any package
-you can install the package globally as well
-by adding `-g` to the above command.
+The CLI utility picks up tasks from project's package.json
+and enhances the default behaviour of "npm run".
 
 
 
-### Quick start
+## Installing
 
-### Commands
+Just run `npm install npm-toolkit --save` in your project and start using
+npm-toolkit in your scripts.
 
-* nt [task]: run a package.json script
-* nt list: list available tasks
-* nt status: shows useful debug information
+If you'd like to use the CLI utility install the package globally
+with `npm install npm-toolkit -g`. You can then use `nt` command in any package.
+
+
+## Methods
+
+* `version`
+* `getProjectRootDir`
+* `getProjectPackageJson`
+* `getSystemInfo`
+* `readJson`
+* `parseCLI`
+* `getProjectEnvVarsList`
+* `getProjectEnvVars`
+* `applyProjectEnvFile`
+* `exec`
+* `execNpmScript`
+* `printOut`
+* `printErr`
+* `glob`
+* `tailFile`
+* `fsDelete`
+* `fsMove`
+* `fsCopy`
+* `fsUnzip`
+
+## CLI
+
+* `nt [task]` runs a package.json script
+* `nt list` list available tasks
+* `nt status` shows useful debug information
+* `nt help` shows useful debug information
 
 
 ### Switches
 
---env switch toggles environment definitions on.
---verbose switch will produce detailed log messages about npm-toolkit
---config switch can be used to point to your application regardless of your current location
+`--env [-e]` switch applies the env vars from `.env` files in the project
+`--verbose [-v]` switch will produce more detailed output from nt
+`--cwd [-c]` switch can be used to point to your application regardless of your current location
 
 
 ### Env variable definitions
 
-npm-toolkit will set the environment variables for you based on the env key provided.
-
-You can use --env switch to quickly swap the configuration of your application's environment.
+npm-toolkit can set the environment variables for you based on the env key provided.
 
 For example typing "nt --env=qa" will load all variables defined in ".env.qa" key.
