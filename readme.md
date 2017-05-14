@@ -8,9 +8,9 @@
 [npm-url]: https://npmjs.org/package/npm-toolkit
 [npm-img]: https://img.shields.io/npm/v/npm-toolkit.svg
 [npm-dl-img]: https://img.shields.io/npm/dm/npm-toolkit.svg
-[travis-img]: https://img.shields.io/travis/vot/npm-toolkit.svg
+[travis-img]: https://img.shields.io/travis/vot/npm-toolkit/master.svg
 [travis-url]: https://travis-ci.org/vot/npm-toolkit
-[coveralls-img]: https://img.shields.io/coveralls/vot/npm-toolkit.svg
+[coveralls-img]: https://img.shields.io/coveralls/vot/npm-toolkit/master.svg
 [coveralls-url]: https://coveralls.io/github/vot/npm-toolkit
 
 
