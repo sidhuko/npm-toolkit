@@ -1,13 +1,11 @@
 var fs = require('fs');
 var parseCliArgs = require('./parseCliArgs');
+var _mapPrintFn = require('../lib/_mapPrintFn');
 var _ = require('lodash');
 
 var args = parseCliArgs();
 var verbose = args.opts.verbose;
-var print = {
-  data: _.get(args, 'print.data', console.log),
-  err: _.get(args, 'print.err', console.error),
-};
+var print = _mapPrintFn(args);
 
 module.exports = function (path, cb) {
   // Bind print options

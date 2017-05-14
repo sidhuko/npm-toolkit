@@ -8,6 +8,7 @@ var locatePackageJson = require('../lib/locatePackageJson');
 var resolvePath = require('../lib/resolvePath');
 var getProjectRootDir = require('../lib/getProjectRootDir');
 var applyEnvVars = require('../lib/applyEnvVars');
+var _mapPrintFn = require('../lib/_mapPrintFn');
 
 var _cfg = {
   ntVersion: require('../package.json').version,
@@ -28,10 +29,7 @@ var initialise = function (argsIn) {
   var args = argsIn || parseCliArgs();
   args.opts.verbose = args.opts.verbose || false;
 
-  args.print = {
-    data: _.get(args, 'print.data', console.log),
-    err: _.get(args, 'print.err', console.error),
-  };
+  args.print = _mapPrintFn(args);
 
   var dir;
   if (_.get(args, 'opts.cwd')) {
