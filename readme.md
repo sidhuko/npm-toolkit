@@ -52,12 +52,14 @@ with `npm install npm-toolkit -g`. You can then use `nt` command in any package.
 * `execNpmScript`
 * `printOut`
 * `printErr`
-* `glob`
 * `tailFile`
+* `fsFind`
+* `fsExists`
 * `fsDelete`
 * `fsMove`
 * `fsCopy`
 * `fsUnzip`
+* `fsPatch`
 
 ## CLI
 
@@ -79,3 +81,9 @@ with `npm install npm-toolkit -g`. You can then use `nt` command in any package.
 npm-toolkit can set the environment variables for you based on the env key provided.
 
 For example typing "nt --env=qa" will load all variables defined in ".env.qa" key.
+
+
+### TODO
+
+* Allow pipes in exec scripts
+* Add `tailFile`, `fsFind`, `fsExists`, `fsDelete`, `fsMove`, `fsCopy`, `fsUnzip`, `fsPatch` to lib

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var clarg = require('clarg');
 
 /**
@@ -19,6 +20,13 @@ function parser (args) {
       cwd: cliArgs.opts.cwd || cliArgs.opts.c || false
     }
   };
+
+  _.map(cliArgs.opts, function (v, k) {
+    if (['verbose', 'env', 'cwd', 'v', 'c', 'e'].indexOf(k) === -1) {
+      parsed.opts[k] = v;
+    }
+
+  });
 
   return parsed;
 }
