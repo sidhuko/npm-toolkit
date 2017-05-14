@@ -1,6 +1,5 @@
-var readJson = require('../cli/readJson');
+var getNtVersion = require('../lib/getNtVersion');
 
 module.exports = function (args) {
-  var packageJson = readJson(__dirname + '/../package.json');
-  args.print.data('npm-toolkit ' + (packageJson.version || '- unknown version'));
+  args.print.data('npm-toolkit ' + (getNtVersion() || '- unknown version'));
 };

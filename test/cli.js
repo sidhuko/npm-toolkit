@@ -1,7 +1,7 @@
 // var expect = require('chai').expect;
-// var launcher = require('../cli/launcher');
-// var readJson = require('../cli/readJson');
-// var getScriptsFromPackageJson = require('../cli/getScriptsFromPackageJson');
+// var launcher = require('../cli');
+// var readJson = require('../lib/readJson');
+// var getScriptsFromPackageJson = require('../lib/getScriptsFromPackageJson');
 //
 // function generateBasicArgs () {
 //   var args = {
