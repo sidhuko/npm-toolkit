@@ -2,15 +2,15 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var chalk = require('chalk');
-var parseCliArgs = require('./cli/parseCliArgs');
+var parseCliArgs = require('./parseCliArgs');
 
-var locatePackageJson = require('./lib/locatePackageJson');
-var resolvePath = require('./lib/resolvePath');
-var getProjectRootDir = require('./lib/getProjectRootDir');
-var applyEnvVars = require('./lib/applyEnvVars');
+var locatePackageJson = require('../lib/locatePackageJson');
+var resolvePath = require('../lib/resolvePath');
+var getProjectRootDir = require('../lib/getProjectRootDir');
+var applyEnvVars = require('../lib/applyEnvVars');
 
 var _cfg = {
-  ntVersion: require('./package.json').version,
+  ntVersion: require('../package.json').version,
   initialised: false
 };
 
@@ -26,7 +26,7 @@ var initialise = function (argsIn) {
     return true;
   }
   var args = argsIn || parseCliArgs();
-  var verbose = args.opts.verbose || false;
+  args.opts.verbose = args.opts.verbose || false;
 
   args.print = {
     data: _.get(args, 'print.data', console.log),
@@ -43,7 +43,7 @@ var initialise = function (argsIn) {
 
   if (_cfg.packageJson) {
     _cfg.projectRoot = getProjectRootDir(_cfg.packageJson, args);
-    if (verbose) args.print.data('[debug] Environment:', args.opts.env || 'not specified');
+    if (args.opts.verbose) args.print.data('[debug] Environment:', args.opts.env || 'not specified');
     applyEnvVars(args.opts.env);
   }
 

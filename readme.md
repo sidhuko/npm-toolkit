@@ -41,6 +41,7 @@ with `npm install npm-toolkit -g`. You can then use `nt` command in any package.
 * `version`
 * `getProjectRootDir`
 * `getProjectPackageJson`
+* `getScriptsFromPackageJson`
 * `getSystemInfo`
 * `readJson`
 * `parseCLI`

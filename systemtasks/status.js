@@ -1,7 +1,7 @@
 var chalk  = require('chalk');
-var os = require('os');
-var config = require('../config');
 var _ = require('lodash');
+
+var getSystemInfo = require('../lib/getSystemInfo');
 
 function genLine (label, value) {
   var l = _.padRight(label, 30);
@@ -9,21 +9,29 @@ function genLine (label, value) {
 }
 
 module.exports = function (args) {
-  args.print.data(chalk.bold(_.pad(' npm-toolkit ', 60, '-')));
-  var osString = [os.type(), os.release(), os.arch()].join(', ');
-  // doesnt exist anymore - write a method to scan .env files in root dir
-  var envDefinitions = _.get(config, 'settings.env');
+  var sysinfo = getSystemInfo();
+  var envDefinitions = Object.keys(sysinfo.projectEnvVars);
 
-  args.print.data(genLine('Current location', process.cwd()));
-  args.print.data(genLine('Project root', config.projectRoot ? config.projectRoot : 'not found'));
-  args.print.data(genLine('Hostname', os.hostname()));
-  args.print.data(genLine('Operating system', osString));
-  args.print.data(genLine('Node version', process.version));
-  args.print.data(genLine('npm-toolkit version', 'v' + config.ntVersion));
-  if (config.projectRoot) {
+  args.print.data(chalk.bold(_.pad(' npm-toolkit ', 60, '-')));
+
+  var lines = [];
+
+  lines.push({name: 'Current location', val: sysinfo.cwd});
+  lines.push({name: 'Project root', val: sysinfo.projectRootDir ? sysinfo.projectRootDir : 'not found'});
+  lines.push({name: 'Hostname', val: sysinfo.hostname});
+  lines.push({name: 'Operating system', val: sysinfo.os});
+  lines.push({name: 'Node version', val: sysinfo.nodeVersion});
+  lines.push({name: 'npm-toolkit version', val: 'v' + sysinfo.ntVersion});
+
+  if (sysinfo.projectRoot) {
     // project npm-toolkit version
   }
-  if (envDefinitions) {
-    args.print.data(genLine('Defined env var sets', Object.keys(envDefinitions).join(',')));
+
+  if (envDefinitions.length) {
+    lines.push({name: 'Env var definitions', val: Object.keys(envDefinitions).join(',')});
   }
+
+  lines.forEach(function (i) {
+    args.print.data(genLine(i.name, i.val));
+  });
 };

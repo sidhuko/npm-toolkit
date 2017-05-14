@@ -1,17 +1,11 @@
 #!/usr/bin/env node
 // var launcher = require('./launcher');
 var parseCliArgs = require('./parseCliArgs');
-var getScriptsFromPackageJson = require('./getScriptsFromPackageJson');
+var getScriptsFromPackageJson = require('../lib/getScriptsFromPackageJson');
 var _ = require('lodash');
 var chalk = require('chalk');
-var config = require('../config');
-
-
-
-function executeScript(script, args) {
-  args.print.data('ExecuteScript: ' + args.cmd[0]);
-  args.print.data('> ' + script + '\n');
-}
+var config = require('./config');
+var execNpmScript = require('../lib/execNpmScript');
 
 function launcher (args) {
   var onDataFn = _.get(args, 'onDataFn');
@@ -65,7 +59,7 @@ function launcher (args) {
     var taskList = getScriptsFromPackageJson(config.packageJson);
     if (Object.keys(taskList).indexOf(task) !== -1) {
       taskFn = function () {
-        return executeScript(taskList[task], args);
+        return execNpmScript(taskList[task], args);
       };
     }
   }
