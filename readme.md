@@ -82,6 +82,8 @@ npm-toolkit can set the environment variables for you based on the env key provi
 
 For example typing "nt --env=qa" will load all variables defined in ".env.qa" key.
 
+You can have your own overrides file as well to enforce certain env vars for your local environment. Create ".env.overrides.json" and it will always be applied after the values specific to the environment you chose.
+
 
 ### TODO
 
