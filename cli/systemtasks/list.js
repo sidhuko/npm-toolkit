@@ -21,8 +21,16 @@ module.exports = function (args) {
   args.print.data();
 
   if (availableEnvs.length) {
+    var envLine = _.without(availableEnvs, 'overrides').join(', ') + ' ';
+    if (availableEnvs.indexOf('overrides') !== -1) {
+      envLine += chalk.dim('(local overrides file exits)');
+    }
+
     args.print.data(chalk.bold('Available env files:')),
-    args.print.data(availableEnvs.join(', '));
+    args.print.data(envLine);
+
+
+
     args.print.data();
   }
 

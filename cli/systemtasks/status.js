@@ -23,12 +23,12 @@ module.exports = function (args) {
   lines.push({name: 'Node version', val: sysinfo.nodeVersion});
   lines.push({name: 'npm-toolkit version', val: 'v' + sysinfo.ntVersion});
 
-  if (sysinfo.projectRoot) {
-    // project npm-toolkit version
-  }
-
   if (envDefinitions.length) {
-    lines.push({name: 'Env var definitions', val: Object.keys(envDefinitions).join(',')});
+    var envLine = _.without(envDefinitions, 'overrides').join(', ') + ' ';
+    if (envDefinitions.indexOf('overrides') !== -1) {
+      envLine += chalk.dim('(local overrides file exits)');
+    }
+    lines.push({name: 'Env var definitions', val: envLine});
   }
 
   lines.forEach(function (i) {
