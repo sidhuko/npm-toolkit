@@ -4,7 +4,7 @@ var config = require('../config');
 var _ = require('lodash');
 
 function genLine (label, value) {
-  var l = _.padRight(label, 30);
+  var l = _.padEnd(label, 30);
   return chalk.bold(l) + value;
 }
 
